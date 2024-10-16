@@ -1,6 +1,6 @@
-import { RegisterCustomer } from '../../../../src/core/aplication/useCases/register-customer'
-import { Document } from '../../../../src/core/domain/valueObjects/Document'
-import { CustomerRepository } from '../../../../src/core/aplication/repositories/customer-repository'
+import { RegisterCustomer } from '@core/aplication/useCases/register-customer'
+import { Document } from '@core/domain/valueObjects/Document'
+import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { MockCustomerRepository } from '../repositories/in-memory-customer-repository'
 import { describe, beforeEach, it, expect } from 'vitest'
 

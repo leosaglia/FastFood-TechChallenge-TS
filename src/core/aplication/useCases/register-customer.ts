@@ -1,6 +1,6 @@
-import { Customer } from '../../domain/entities/Customer'
-import { Document } from '../../domain/valueObjects/Document'
-import { CustomerRepository } from '../repositories/customer-repository'
+import { Customer } from '@core/domain/entities/Customer'
+import { Document } from '@core/domain/valueObjects/Document'
+import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 
 interface RegisterCustomerDto {
   document: string

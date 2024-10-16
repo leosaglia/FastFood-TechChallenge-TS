@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { Document } from '../valueObjects/Document'
+import { Document } from '@core/domain/valueObjects/Document'
 
 export class Customer {
   public id: string

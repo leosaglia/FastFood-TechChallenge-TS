@@ -1,4 +1,4 @@
-import { Customer } from '../../domain/entities/Customer'
+import { Customer } from '@core/domain/entities/Customer'
 
 export interface CustomerRepository {
   register(customer: Customer): Promise<Customer>

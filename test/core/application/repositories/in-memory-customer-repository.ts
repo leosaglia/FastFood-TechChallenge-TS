@@ -1,5 +1,5 @@
-import { Customer } from '../../../../src/core/domain/entities/Customer'
-import { CustomerRepository } from '../../../../src/core/aplication/repositories/customer-repository'
+import { Customer } from '@core/domain/entities/Customer'
+import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 
 export class MockCustomerRepository implements CustomerRepository {
   private customers: Customer[] = []
