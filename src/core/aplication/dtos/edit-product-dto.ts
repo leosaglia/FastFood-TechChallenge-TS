@@ -1,6 +1,7 @@
 import Decimal from 'decimal.js'
 
-export interface RegisterProductDto {
+export interface EditProductDto {
+  id: string
   name: string
   price: Decimal
   description: string
