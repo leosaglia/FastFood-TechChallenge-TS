@@ -1,7 +1,7 @@
 import { Customer } from '@core/domain/entities/Customer'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 
-export class MockCustomerRepository implements CustomerRepository {
+export class InMemoryCustomerRepository implements CustomerRepository {
   private customers: Customer[] = []
 
   async findByDocument(document: string): Promise<Customer | null> {

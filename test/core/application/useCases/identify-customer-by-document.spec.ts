@@ -3,14 +3,14 @@ import { describe, beforeEach, it, expect } from 'vitest'
 import { IdentifyCustomerByDocumentUseCase } from '@core/aplication/useCases/identify-customer-by-document'
 import { Customer } from '@core/domain/entities/Customer'
 import { Document } from '@core/domain/valueObjects/Document'
-import { MockCustomerRepository } from '../repositories/in-memory-customer-repository'
+import { InMemoryCustomerRepository } from '../repositories/in-memory-customer-repository'
 
 describe('IdentifyCustomerByDocument', () => {
   let sut: IdentifyCustomerByDocumentUseCase
-  let mockCustomerRepository: MockCustomerRepository
+  let mockCustomerRepository: InMemoryCustomerRepository
 
   beforeEach(() => {
-    mockCustomerRepository = new MockCustomerRepository()
+    mockCustomerRepository = new InMemoryCustomerRepository()
     sut = new IdentifyCustomerByDocumentUseCase(mockCustomerRepository)
   })
 
