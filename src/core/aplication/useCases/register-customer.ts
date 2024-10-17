@@ -1,14 +1,9 @@
 import { Customer } from '@core/domain/entities/Customer'
 import { Document } from '@core/domain/valueObjects/Document'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { RegisterCustomerDto } from '@core/aplication/dtos/register-customer-dto'
 
-interface RegisterCustomerDto {
-  document: string
-  name: string
-  email: string
-}
-
-export class RegisterCustomer {
+export class RegisterCustomerUseCase {
   private customerRepository: CustomerRepository
 
   constructor(customerRepository: CustomerRepository) {

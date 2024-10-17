@@ -1,16 +1,16 @@
-import { RegisterCustomer } from '@core/aplication/useCases/register-customer'
+import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-customer'
 import { Document } from '@core/domain/valueObjects/Document'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { MockCustomerRepository } from '../repositories/in-memory-customer-repository'
 import { describe, beforeEach, it, expect } from 'vitest'
 
 describe('RegisterCustomer', () => {
-  let sut: RegisterCustomer
+  let sut: RegisterCustomerUseCase
   let customerRepository: CustomerRepository
 
   beforeEach(() => {
     customerRepository = new MockCustomerRepository()
-    sut = new RegisterCustomer(customerRepository)
+    sut = new RegisterCustomerUseCase(customerRepository)
   })
 
   it('should register a new customer', async () => {
