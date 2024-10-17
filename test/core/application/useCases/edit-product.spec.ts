@@ -1,7 +1,7 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 import { Decimal } from 'decimal.js'
 
-import { Category } from '@core/domain/enums/Category'
+import { Category } from '@core/domain/valueObjects/Category'
 import { Product } from '@core/domain/entities/Product'
 import { EditProductDto } from '@core/aplication/dtos/edit-product-dto'
 import { EditProductUseCase } from '@core/aplication/useCases/edit-product'
@@ -21,7 +21,7 @@ describe('EditProductUseCase', () => {
       'Existing Product',
       new Decimal(100),
       'Existing Description',
-      Category.Acompanhamento,
+      new Category('Acompanhamento'),
       '1',
     )
     mockProductRepository.register(existingProduct)
@@ -31,7 +31,7 @@ describe('EditProductUseCase', () => {
       name: 'Updated Product',
       price: new Decimal(150),
       description: 'Updated Description',
-      category: Category.Bebida,
+      category: 'Bebida',
     }
 
     const updatedProduct = await sut.execute(dto)
@@ -39,7 +39,7 @@ describe('EditProductUseCase', () => {
     expect(updatedProduct.name).toBe(dto.name)
     expect(updatedProduct.price).toStrictEqual(dto.price)
     expect(updatedProduct.description).toBe(dto.description)
-    expect(updatedProduct.category).toBe(dto.category)
+    expect(updatedProduct.category.getValue()).toBe(dto.category)
     expect(updatedProduct.id).toBe(dto.id)
   })
 

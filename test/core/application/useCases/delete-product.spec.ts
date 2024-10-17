@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { Decimal } from 'decimal.js'
 
-import { Category } from '@core/domain/enums/Category'
+import { Category } from '@core/domain/valueObjects/Category'
 import { DeleteProductUseCase } from '@core/aplication/useCases/delete-product'
 import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
 import { Product } from '@core/domain/entities/Product'
@@ -17,11 +17,12 @@ describe('DeleteProductUseCase', () => {
 
   it('should delete a product successfully', async () => {
     const productId = '123'
+    const category = new Category('Acompanhamento')
     const existingProduct = new Product(
       'Existing Product',
       new Decimal(100),
       'Existing Description',
-      Category.Acompanhamento,
+      category,
       productId,
     )
     mockProductRepository.register(existingProduct)

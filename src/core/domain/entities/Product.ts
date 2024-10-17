@@ -1,6 +1,6 @@
 import { Decimal } from 'decimal.js'
 import { randomUUID } from 'node:crypto'
-import { Category } from '@core/domain/enums/Category'
+import { Category } from '@core/domain/valueObjects/Category'
 
 export class Product {
   public id: string
@@ -15,7 +15,6 @@ export class Product {
     this.validateName(name)
     this.validatePrice(price)
     this.validateDescription(description)
-    this.validateCategory(category)
     this.id = id || randomUUID()
   }
 
@@ -34,12 +33,6 @@ export class Product {
   private validateDescription(description: string): void {
     if (!description || description.trim().length < 10) {
       throw new Error('Invalid description.')
-    }
-  }
-
-  private validateCategory(category: Category): void {
-    if (!Object.values(Category).includes(category)) {
-      throw new Error('Invalid category.')
     }
   }
 }
