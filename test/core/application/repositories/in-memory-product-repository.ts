@@ -1,5 +1,6 @@
 import { Product } from '@core/domain/entities/Product'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { Category } from '@core/domain/valueObjects/Category'
 
 export class InMemoryProductRepository implements ProductRepository {
   private products: Product[] = []
@@ -21,5 +22,11 @@ export class InMemoryProductRepository implements ProductRepository {
 
   async findById(id: string): Promise<Product | null> {
     return this.products.find((p) => p.id === id) || null
+  }
+
+  async findByCategory(category: Category): Promise<Product[]> {
+    return this.products.filter(
+      (p) => p.category.getValue() === category.getValue(),
+    )
   }
 }
