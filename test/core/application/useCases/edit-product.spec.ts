@@ -49,7 +49,7 @@ describe('EditProductUseCase', () => {
       name: 'Updated Product',
       price: new Decimal(150),
       description: 'Updated Description',
-      category: Category.Lanche,
+      category: new Category('Bebida').getValue(),
     }
 
     await expect(sut.execute(dto)).rejects.toThrow('Product not found.')
@@ -99,7 +99,7 @@ describe('EditProductUseCase', () => {
         'Existing Product',
         new Decimal(100),
         'Existing Description',
-        Category.Acompanhamento,
+        new Category('Acompanhamento'),
         '1',
       )
       mockProductRepository.register(existingProduct)
