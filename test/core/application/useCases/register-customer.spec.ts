@@ -3,6 +3,9 @@ import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-cust
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { InMemoryCustomerRepository } from '../repositories/in-memory-customer-repository'
 import { makeRegisterCustomerRequest } from '@test/factories/customer-factory'
+import { Customer } from '@core/domain/entities/Customer'
+import { ResourceAlreadyExistsError } from '@core/error-handling/resource-already-exists-error'
+import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('RegisterCustomer', () => {
   let sut: RegisterCustomerUseCase
@@ -16,7 +19,12 @@ describe('RegisterCustomer', () => {
   it('should register a new customer', async () => {
     const customer = makeRegisterCustomerRequest()
 
-    const registeredCustomer = (await sut.execute(customer)).customer
+    const result = await sut.execute(customer)
+    const { customer: registeredCustomer } = result.value as {
+      customer: Customer
+    }
+
+    expect(result.isSuccess()).toBe(true)
 
     expect(registeredCustomer?.getDocument()).toEqual(
       new Document(customer.document).getValue(),
@@ -31,9 +39,12 @@ describe('RegisterCustomer', () => {
 
     await sut.execute(customer)
 
-    await expect(sut.execute(customer)).rejects.toThrow(
-      'Customer already exists.',
-    )
+    const result = await sut.execute(customer)
+
+    expect(result.isFailure()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceAlreadyExistsError)
+    const error = result.value as ResourceAlreadyExistsError
+    expect(error.message).toBe('Customer already exists.')
   })
 
   const customerWithInvalidDocument = makeRegisterCustomerRequest({
@@ -55,7 +66,12 @@ describe('RegisterCustomer', () => {
   ])(
     'should throw an error if pass invalid fields',
     async (invalidFCustomer, excMessage) => {
-      await expect(sut.execute(invalidFCustomer)).rejects.toThrow(excMessage)
+      const result = await sut.execute(invalidFCustomer)
+
+      expect(result.isFailure()).toBe(true)
+      expect(result.value).toBeInstanceOf(BadRequestError)
+      const error = result.value as BadRequestError
+      expect(error.message).toBe(excMessage)
     },
   )
 })

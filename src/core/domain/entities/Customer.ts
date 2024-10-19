@@ -1,5 +1,6 @@
 import { Document } from '@core/domain/valueObjects/Document'
 import { UniqueEntityId } from '../valueObjects/unique-entity-id'
+import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 export class Customer {
   id: UniqueEntityId
@@ -29,14 +30,14 @@ export class Customer {
 
   private validateName(name: string): void {
     if (!name || name.trim().length < 2) {
-      throw new Error('Invalid name.')
+      throw new BadRequestError('Invalid name.')
     }
   }
 
   private validateEmail(email: string): void {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
-      throw new Error('Invalid email.')
+      throw new BadRequestError('Invalid email.')
     }
   }
 }

@@ -1,9 +1,11 @@
+import { BadRequestError } from '@core/error-handling/bad-request-error'
+
 export class Document {
   private readonly value: string
 
   constructor(value: string) {
     if (!this.isValid(value)) {
-      throw new Error('Invalid document.')
+      throw new BadRequestError('Invalid document.')
     }
     this.value = value
   }

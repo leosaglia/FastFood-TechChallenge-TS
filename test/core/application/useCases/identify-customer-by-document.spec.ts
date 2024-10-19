@@ -2,6 +2,8 @@ import { IdentifyCustomerByDocumentUseCase } from '@core/aplication/useCases/ide
 import { Customer } from '@core/domain/entities/Customer'
 import { Document } from '@core/domain/valueObjects/Document'
 import { InMemoryCustomerRepository } from '../repositories/in-memory-customer-repository'
+import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
+import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('IdentifyCustomerByDocument', () => {
   let sut: IdentifyCustomerByDocumentUseCase
@@ -21,20 +23,28 @@ describe('IdentifyCustomerByDocument', () => {
     )
     mockCustomerRepository.register(customer)
 
-    const identifiedCustomer = (await sut.execute('111.444.777-35')).customer
+    const result = await sut.execute('111.444.777-35')
+    const identifiedCustomer = result.value as { customer: Customer }
 
-    expect(identifiedCustomer).toBe(customer)
+    expect(result.isSuccess()).toBe(true)
+    expect(identifiedCustomer.customer).toBe(customer)
   })
 
   it('should throw an error when the customer was not registered', async () => {
-    await expect(sut.execute('111.444.777-35')).rejects.toThrow(
-      'Customer not registered',
-    )
+    const result = await sut.execute('111.444.777-35')
+
+    expect(result.isFailure()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    const error = result.value as ResourceNotFoundError
+    expect(error.message).toBe('Customer not registered')
   })
 
   it('should throw an error when the document is invalid', async () => {
-    await expect(sut.execute('invalid_document')).rejects.toThrow(
-      'Invalid document.',
-    )
+    const result = await sut.execute('11111')
+
+    expect(result.isFailure()).toBe(true)
+    expect(result.value).toBeInstanceOf(BadRequestError)
+    const error = result.value as BadRequestError
+    expect(error.message).toBe('Invalid document.')
   })
 })
