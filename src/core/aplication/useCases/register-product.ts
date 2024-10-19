@@ -1,8 +1,9 @@
-import { Product } from '@core/domain/entities/Product'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
-import { Category } from '@core/domain/valueObjects/Category'
 import { Decimal } from 'decimal.js'
+
+import { Product } from '@core/domain/entities/Product'
+import { Category } from '@core/domain/valueObjects/Category'
 import { RegisterProductDto } from '@core/aplication/dtos/register-product-dto'
+import { ProductRepository } from '@core/aplication/repositories/product-repository'
 
 export class RegisterProductUseCase {
   private productRepository: ProductRepository

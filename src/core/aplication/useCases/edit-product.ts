@@ -1,7 +1,7 @@
 import { Product } from '@core/domain/entities/Product'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
 import { EditProductDto } from '@core/aplication/dtos/edit-product-dto'
 import { Category } from '@core/domain/valueObjects/Category'
+import { ProductRepository } from '@core/aplication/repositories/product-repository'
 
 export class EditProductUseCase {
   private productRepository: ProductRepository

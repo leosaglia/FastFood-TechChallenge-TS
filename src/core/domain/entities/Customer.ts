@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto'
+
 import { Document } from '@core/domain/valueObjects/Document'
 
 export class Customer {
