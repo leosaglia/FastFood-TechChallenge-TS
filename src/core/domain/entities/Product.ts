@@ -2,6 +2,7 @@ import { Decimal } from 'decimal.js'
 
 import { Category } from '@core/domain/valueObjects/Category'
 import { UniqueEntityId } from '../valueObjects/unique-entity-id'
+import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 export class Product {
   private id: UniqueEntityId
@@ -41,19 +42,19 @@ export class Product {
 
   private validateName(name: string): void {
     if (!name || name.trim().length < 2) {
-      throw new Error('Invalid name.')
+      throw new BadRequestError('Invalid name.')
     }
   }
 
   private validatePrice(price: Decimal): void {
     if (price.isNaN() || price.isNegative()) {
-      throw new Error('Invalid price.')
+      throw new BadRequestError('Invalid price.')
     }
   }
 
   private validateDescription(description: string): void {
     if (!description || description.trim().length < 10) {
-      throw new Error('Invalid description.')
+      throw new BadRequestError('Invalid description.')
     }
   }
 }

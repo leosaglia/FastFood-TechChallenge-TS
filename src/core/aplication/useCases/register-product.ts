@@ -4,10 +4,14 @@ import { Product } from '@core/domain/entities/Product'
 import { Category } from '@core/domain/valueObjects/Category'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 import { RegisterProductUseCaseRequest } from '../dtos/request/register-product-use-case-request'
+import { Either, success, failure } from '@core/error-handling/Either'
+import { BadRequestError } from '@core/error-handling/bad-request-error'
+import { NoMappedError } from '@core/error-handling/no-mapped-error'
 
-interface RegisterProductUseCaseResponse {
-  product: Product
-}
+type RegisterProductUseCaseResponse = Either<
+  NoMappedError | BadRequestError,
+  Product
+>
 
 export class RegisterProductUseCase {
   constructor(private productRepository: ProductRepository) {}
@@ -18,15 +22,22 @@ export class RegisterProductUseCase {
     description,
     category,
   }: RegisterProductUseCaseRequest): Promise<RegisterProductUseCaseResponse> {
-    const product = new Product(
-      name,
-      new Decimal(price),
-      description,
-      new Category(category),
-    )
+    try {
+      const product = new Product(
+        name,
+        new Decimal(price),
+        description,
+        new Category(category),
+      )
 
-    await this.productRepository.register(product)
+      await this.productRepository.register(product)
 
-    return { product }
+      return success(product)
+    } catch (error) {
+      if (error instanceof BadRequestError)
+        return failure(new BadRequestError(error.message))
+
+      return failure(new NoMappedError('An unexpected error occurred'))
+    }
   }
 }

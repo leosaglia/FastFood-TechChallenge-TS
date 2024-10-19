@@ -3,6 +3,8 @@ import { ProductRepository } from '@core/aplication/repositories/product-reposit
 import { RegisterProductUseCase } from '@core/aplication/useCases/register-product'
 import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
 import { makeRegisterProductRequest } from '@test/factories/product-factory'
+import { Product } from '@core/domain/entities/Product'
+import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('RegisterProductUseCase', () => {
   let sut: RegisterProductUseCase
@@ -16,8 +18,11 @@ describe('RegisterProductUseCase', () => {
   it('should register a product successfully', async () => {
     const product = makeRegisterProductRequest()
 
-    const registeredProduct = (await sut.execute(product)).product
+    const result = await sut.execute(product)
+    const registeredProduct = result.value as Product
 
+    expect(result.isSuccess).toBeTruthy()
+    expect(result.value).toBeInstanceOf(Product)
     expect(registeredProduct.getName()).toBe(product.name)
     expect(registeredProduct.getPrice()).toStrictEqual(product.price)
     expect(registeredProduct.getDescription()).toBe(product.description)
@@ -47,7 +52,12 @@ describe('RegisterProductUseCase', () => {
   ])(
     'should throw an error when pass invalid fields to register a product',
     async (invalidProduct, excMessage) => {
-      await expect(sut.execute(invalidProduct)).rejects.toThrow(excMessage)
+      const result = await sut.execute(invalidProduct)
+      const error = result.value as BadRequestError
+
+      expect(result.isFailure).toBeTruthy()
+      expect(result.value).toBeInstanceOf(BadRequestError)
+      expect(error.message).toBe(excMessage)
     },
   )
 })

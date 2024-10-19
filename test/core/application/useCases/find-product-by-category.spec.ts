@@ -2,6 +2,8 @@ import { Category } from '@core/domain/valueObjects/Category'
 import { FindProductsByCategoryUseCase } from '@core/aplication/useCases/find-products-by-category'
 import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
 import { makeProduct } from '@test/factories/product-factory'
+import { Product } from '@core/domain/entities/Product'
+import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('FindProductByCategoryUseCase', () => {
   let sut: FindProductsByCategoryUseCase
@@ -31,22 +33,30 @@ describe('FindProductByCategoryUseCase', () => {
     mockProductRepository.register(product2)
     mockProductRepository.register(product3)
 
-    const products = (await sut.execute('Acompanhamento')).products
+    const result = await sut.execute('Acompanhamento')
 
+    const products = result.value as Product[]
+
+    expect(result.isSuccess()).toBe(true)
     expect(products).toHaveLength(2)
     expect(products[0].getName()).toBe('Product 1')
     expect(products[1].getName()).toBe('Product 2')
   })
 
   it('should return empty array when no products are found', async () => {
-    const products = (await sut.execute('Acompanhamento')).products
+    const result = await sut.execute('Acompanhamento')
 
+    const products = result.value as Product[]
+
+    expect(result.isSuccess()).toBe(true)
     expect(products).toHaveLength(0)
   })
 
   it('should throw an error if category is invalid', async () => {
-    await expect(sut.execute('Invalid Category')).rejects.toThrow(
-      'Invalid category.',
-    )
+    const result = await sut.execute('Invalid Category')
+    const error = result.value as BadRequestError
+
+    expect(result.isFailure()).toBe(true)
+    expect(error.message).toBe('Invalid category.')
   })
 })

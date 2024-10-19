@@ -7,6 +7,9 @@ import {
   makeEditProductRequest,
   makeProduct,
 } from '@test/factories/product-factory'
+import { Product } from '@core/domain/entities/Product'
+import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
+import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('EditProductUseCase', () => {
   let sut: EditProductUseCase
@@ -29,8 +32,10 @@ describe('EditProductUseCase', () => {
       category: 'Bebida',
     })
 
-    const updatedProduct = (await sut.execute(productToEdit)).product
+    const result = await sut.execute(productToEdit)
+    const updatedProduct = result.value as Product
 
+    expect(result.isSuccess()).toBeTruthy()
     expect(updatedProduct.getName()).toBe(productToEdit.name)
     expect(updatedProduct.getPrice()).toStrictEqual(productToEdit.price)
     expect(updatedProduct.getDescription()).toBe(productToEdit.description)
@@ -40,7 +45,13 @@ describe('EditProductUseCase', () => {
 
   it('should throw an error if product is not found', async () => {
     const product = makeEditProductRequest({ id: 'non-existent-id' })
-    await expect(sut.execute(product)).rejects.toThrow('Product not found.')
+    const result = await sut.execute(product)
+
+    expect(result.isFailure()).toBeTruthy()
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+
+    const error = result.value as ResourceNotFoundError
+    expect(error.message).toBe('Product not found.')
   })
 
   const productWithInvalidName = makeEditProductRequest({ name: '' })
@@ -68,7 +79,13 @@ describe('EditProductUseCase', () => {
       const existingProduct = makeProduct()
       mockProductRepository.register(existingProduct)
 
-      await expect(sut.execute(invalidProduct)).rejects.toThrow(excMessage)
+      const result = await sut.execute(invalidProduct)
+
+      expect(result.isFailure()).toBeTruthy()
+      expect(result.value).toBeInstanceOf(BadRequestError)
+
+      const error = result.value as BadRequestError
+      expect(error.message).toBe(excMessage)
     },
   )
 })
