@@ -35,11 +35,11 @@ describe('EditProductUseCase', () => {
 
     const updatedProduct = await sut.execute(dto)
 
-    expect(updatedProduct.name).toBe(dto.name)
-    expect(updatedProduct.price).toStrictEqual(dto.price)
-    expect(updatedProduct.description).toBe(dto.description)
-    expect(updatedProduct.category.getValue()).toBe(dto.category)
-    expect(updatedProduct.id).toBe(dto.id)
+    expect(updatedProduct.getName()).toBe(dto.name)
+    expect(updatedProduct.getPrice()).toStrictEqual(dto.price)
+    expect(updatedProduct.getDescription()).toBe(dto.description)
+    expect(updatedProduct.getCategory().getValue()).toBe(dto.category)
+    expect(updatedProduct.getId()).toBe(dto.id)
   })
 
   it('should throw an error if product is not found', async () => {

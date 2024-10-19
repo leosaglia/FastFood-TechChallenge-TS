@@ -43,8 +43,8 @@ describe('FindProductByCategoryUseCase', () => {
     const products = await sut.execute('Acompanhamento')
 
     expect(products).toHaveLength(2)
-    expect(products[0].name).toBe('Product 1')
-    expect(products[1].name).toBe('Product 2')
+    expect(products[0].getName()).toBe('Product 1')
+    expect(products[1].getName()).toBe('Product 2')
   })
 
   it('should return empty array when no products are found', async () => {

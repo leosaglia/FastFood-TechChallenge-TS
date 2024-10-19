@@ -4,13 +4,13 @@ import { Decimal } from 'decimal.js'
 import { Category } from '@core/domain/valueObjects/Category'
 
 export class Product {
-  public id: string
+  private id: string
 
   constructor(
-    public name: string,
-    public price: Decimal,
-    public description: string,
-    public category: Category,
+    private name: string,
+    private price: Decimal,
+    private description: string,
+    private category: Category,
     id?: string,
   ) {
     this.validateName(name)
@@ -21,6 +21,22 @@ export class Product {
 
   public getId(): string {
     return this.id
+  }
+
+  public getName(): string {
+    return this.name
+  }
+
+  public getPrice(): Decimal {
+    return this.price
+  }
+
+  public getDescription(): string {
+    return this.description
+  }
+
+  public getCategory(): Category {
+    return this.category
   }
 
   private validateName(name: string): void {

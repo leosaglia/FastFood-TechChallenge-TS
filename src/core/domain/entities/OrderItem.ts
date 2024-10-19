@@ -15,7 +15,7 @@ export class OrderItem {
   }
 
   getTotal(): Decimal {
-    return this.product.price.mul(this.quantity)
+    return this.product.getPrice().mul(this.quantity)
   }
 
   getProduct(): Product {
@@ -27,6 +27,6 @@ export class OrderItem {
   }
 
   equals(other: OrderItem): boolean {
-    return this.product.id === other.product.id
+    return this.product.getId() === other.product.getId()
   }
 }

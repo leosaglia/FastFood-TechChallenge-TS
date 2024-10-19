@@ -23,11 +23,11 @@ describe('RegisterProductUseCase', () => {
 
     const registeredProduct = await sut.execute(dto)
 
-    expect(registeredProduct.name).toBe(dto.name)
-    expect(registeredProduct.price).toStrictEqual(dto.price)
-    expect(registeredProduct.description).toBe(dto.description)
-    expect(registeredProduct.category.getValue()).toBe(dto.category)
-    expect(registeredProduct.id).toBeDefined()
+    expect(registeredProduct.getName()).toBe(dto.name)
+    expect(registeredProduct.getPrice()).toStrictEqual(dto.price)
+    expect(registeredProduct.getDescription()).toBe(dto.description)
+    expect(registeredProduct.getCategory().getValue()).toBe(dto.category)
+    expect(registeredProduct.getId()).toBeDefined()
   })
 
   const productWithInvalidName = {
