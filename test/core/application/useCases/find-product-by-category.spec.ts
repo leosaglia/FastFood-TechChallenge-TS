@@ -35,7 +35,7 @@ describe('FindProductByCategoryUseCase', () => {
 
     const result = await sut.execute('Acompanhamento')
 
-    const products = result.value as Product[]
+    const { products } = result.value as { products: Product[] }
 
     expect(result.isSuccess()).toBe(true)
     expect(products).toHaveLength(2)
@@ -46,7 +46,7 @@ describe('FindProductByCategoryUseCase', () => {
   it('should return empty array when no products are found', async () => {
     const result = await sut.execute('Acompanhamento')
 
-    const products = result.value as Product[]
+    const { products } = result.value as { products: Product[] }
 
     expect(result.isSuccess()).toBe(true)
     expect(products).toHaveLength(0)

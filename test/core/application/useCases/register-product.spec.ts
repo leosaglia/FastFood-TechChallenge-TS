@@ -19,10 +19,9 @@ describe('RegisterProductUseCase', () => {
     const product = makeRegisterProductRequest()
 
     const result = await sut.execute(product)
-    const registeredProduct = result.value as Product
+    const { product: registeredProduct } = result.value as { product: Product }
 
     expect(result.isSuccess).toBeTruthy()
-    expect(result.value).toBeInstanceOf(Product)
     expect(registeredProduct.getName()).toBe(product.name)
     expect(registeredProduct.getPrice()).toStrictEqual(product.price)
     expect(registeredProduct.getDescription()).toBe(product.description)

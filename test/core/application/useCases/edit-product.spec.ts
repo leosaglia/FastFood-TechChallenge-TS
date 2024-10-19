@@ -33,7 +33,7 @@ describe('EditProductUseCase', () => {
     })
 
     const result = await sut.execute(productToEdit)
-    const updatedProduct = result.value as Product
+    const { product: updatedProduct } = result.value as { product: Product }
 
     expect(result.isSuccess()).toBeTruthy()
     expect(updatedProduct.getName()).toBe(productToEdit.name)

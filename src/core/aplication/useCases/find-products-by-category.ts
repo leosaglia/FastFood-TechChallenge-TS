@@ -7,7 +7,9 @@ import { NoMappedError } from '@core/error-handling/no-mapped-error'
 
 type FindProductsByCategoryUseCaseResponse = Either<
   BadRequestError | NoMappedError,
-  Product[]
+  {
+    products: Product[]
+  }
 >
 
 export class FindProductsByCategoryUseCase {
@@ -22,7 +24,7 @@ export class FindProductsByCategoryUseCase {
       const products =
         await this.productRepository.findByCategory(categoryValue)
 
-      return success(products)
+      return success({ products })
     } catch (error) {
       if (error instanceof BadRequestError)
         return failure(new BadRequestError(error.message))

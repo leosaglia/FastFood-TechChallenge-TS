@@ -8,8 +8,10 @@ import { NoMappedError } from '@core/error-handling/no-mapped-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 
 type EditProductUseCaseResponse = Either<
-  NoMappedError | BadRequestError,
-  Product
+  NoMappedError | BadRequestError | ResourceNotFoundError,
+  {
+    product: Product
+  }
 >
 
 export class EditProductUseCase {
@@ -39,7 +41,7 @@ export class EditProductUseCase {
 
       this.productRepository.edit(product)
 
-      return success(product)
+      return success({ product })
     } catch (error) {
       if (error instanceof BadRequestError)
         return failure(new BadRequestError(error.message))

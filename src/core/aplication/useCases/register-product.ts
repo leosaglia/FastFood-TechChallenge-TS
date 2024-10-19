@@ -10,7 +10,9 @@ import { NoMappedError } from '@core/error-handling/no-mapped-error'
 
 type RegisterProductUseCaseResponse = Either<
   NoMappedError | BadRequestError,
-  Product
+  {
+    product: Product
+  }
 >
 
 export class RegisterProductUseCase {
@@ -32,7 +34,7 @@ export class RegisterProductUseCase {
 
       await this.productRepository.register(product)
 
-      return success(product)
+      return success({ product })
     } catch (error) {
       if (error instanceof BadRequestError)
         return failure(new BadRequestError(error.message))
