@@ -15,7 +15,7 @@ export class RegisterCustomerUseCase {
     const customer = new Customer(dto.name, document, dto.email)
 
     const customerFound = await this.customerRepository.findByDocument(
-      customer.document.getValue(),
+      customer.getDocument(),
     )
 
     if (customerFound) {

@@ -55,6 +55,6 @@ export class Document {
   }
 
   public getValue(): string {
-    return this.value
+    return this.value.replace(/.(?=.{4})/g, '*')
   }
 }

@@ -1,5 +1,5 @@
-import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-customer'
 import { Document } from '@core/domain/valueObjects/Document'
+import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-customer'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { InMemoryCustomerRepository } from '../repositories/in-memory-customer-repository'
 
@@ -21,11 +21,11 @@ describe('RegisterCustomer', () => {
 
     const registeredCustomer = await sut.execute(customer)
 
-    expect(registeredCustomer?.document).toEqual(
-      new Document(customer.document),
+    expect(registeredCustomer?.getDocument()).toEqual(
+      new Document(customer.document).getValue(),
     )
-    expect(registeredCustomer?.email).toEqual(customer.email)
-    expect(registeredCustomer?.name).toEqual(customer.name)
+    expect(registeredCustomer?.getEmail()).toEqual(customer.email)
+    expect(registeredCustomer?.getName()).toEqual(customer.name)
     expect(registeredCustomer?.id).toBeDefined()
   })
 
