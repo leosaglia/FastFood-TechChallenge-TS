@@ -17,5 +17,6 @@ describe('CreateOrderUseCase', () => {
     expect(order).toBeDefined()
     expect(order.getId()).toBeDefined()
     expect(order.getItems()).toHaveLength(0)
+    expect(order.getStatus()).toBe('Criado')
   })
 })

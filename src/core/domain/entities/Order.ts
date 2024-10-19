@@ -1,14 +1,20 @@
 import Decimal from 'decimal.js'
 
 import { OrderItem } from './OrderItem'
+import { OrderStatus } from '../enums/order-status'
 import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 
 export class Order {
   private id: UniqueEntityId
   private items: OrderItem[] = []
+  private createdAt: Date
+  private updatedAt: Date
+  private status: OrderStatus = OrderStatus.CREATED
 
   constructor(id?: string) {
     this.id = new UniqueEntityId(id)
+    this.createdAt = new Date()
+    this.updatedAt = new Date()
   }
 
   addItem(item: OrderItem): void {
@@ -40,5 +46,9 @@ export class Order {
 
   getItems(): OrderItem[] {
     return this.items
+  }
+
+  getStatus(): OrderStatus {
+    return this.status
   }
 }
