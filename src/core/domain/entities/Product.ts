@@ -1,5 +1,6 @@
-import { Decimal } from 'decimal.js'
 import { randomUUID } from 'node:crypto'
+import { Decimal } from 'decimal.js'
+
 import { Category } from '@core/domain/valueObjects/Category'
 
 export class Product {
@@ -16,6 +17,10 @@ export class Product {
     this.validatePrice(price)
     this.validateDescription(description)
     this.id = id || randomUUID()
+  }
+
+  public getId(): string {
+    return this.id
   }
 
   private validateName(name: string): void {
