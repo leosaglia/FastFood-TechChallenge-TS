@@ -7,6 +7,7 @@ import { AddItemToOrderUseCase } from '@core/aplication/useCases/add-item-to-ord
 import { InMemoryOrderRepository } from '../repositories/in-memory-order-repository'
 import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
 import { makeProduct } from '@test/factories/product-factory'
+import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 
 describe('AddItemToOrderUseCase', () => {
   let sut: AddItemToOrderUseCase
@@ -29,14 +30,15 @@ describe('AddItemToOrderUseCase', () => {
     await mockProductRepository.register(product)
     const quantity = 2
 
-    const updatedOrder = (
-      await sut.execute({
-        orderId: order.getId(),
-        productId: product.getId(),
-        quantity,
-      })
-    ).order
+    const result = await sut.execute({
+      orderId: order.getId(),
+      productId: product.getId(),
+      quantity,
+    })
 
+    const { order: updatedOrder } = result.value as { order: Order }
+
+    expect(result.isSuccess()).toBe(true)
     expect(updatedOrder.getItems()).toHaveLength(1)
     expect(updatedOrder.getItems()[0].getProduct().getId()).toBe(
       product.getId(),
@@ -62,14 +64,15 @@ describe('AddItemToOrderUseCase', () => {
       quantity,
     })
 
-    const updatedOrder = (
-      await sut.execute({
-        orderId: order.getId(),
-        productId: product.getId(),
-        quantity: 3,
-      })
-    ).order
+    const result = await sut.execute({
+      orderId: order.getId(),
+      productId: product.getId(),
+      quantity: 3,
+    })
 
+    const { order: updatedOrder } = result.value as { order: Order }
+
+    expect(result.isSuccess()).toBe(true)
     expect(updatedOrder.getItems()).toHaveLength(1)
     expect(updatedOrder.getItems()[0].getProduct().getId()).toBe(
       product.getId(),
@@ -82,9 +85,16 @@ describe('AddItemToOrderUseCase', () => {
     const productId = '123'
     const quantity = 2
 
-    await expect(
-      sut.execute({ orderId: 'invalid_order_id', productId, quantity }),
-    ).rejects.toThrow('Order not found')
+    const result = await sut.execute({
+      orderId: 'invalid_order_id',
+      productId,
+      quantity,
+    })
+
+    expect(result.isFailure()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    const error = result.value as ResourceNotFoundError
+    expect(error.message).toBe('Order not found')
   })
 
   it('should throw an error if product does not exist', async () => {
@@ -92,12 +102,15 @@ describe('AddItemToOrderUseCase', () => {
     await mockOrderRepository.register(order)
     const quantity = 2
 
-    await expect(
-      sut.execute({
-        orderId: order.getId(),
-        productId: 'invalid_product_id',
-        quantity,
-      }),
-    ).rejects.toThrow('Product not found')
+    const result = await sut.execute({
+      orderId: order.getId(),
+      productId: 'invalid_product_id',
+      quantity,
+    })
+
+    expect(result.isFailure()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    const error = result.value as ResourceNotFoundError
+    expect(error.message).toBe('Product not found')
   })
 })
