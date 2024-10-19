@@ -1,4 +1,3 @@
-import { describe, beforeEach, it, expect } from 'vitest'
 import { Decimal } from 'decimal.js'
 
 import { Category } from '@core/domain/valueObjects/Category'

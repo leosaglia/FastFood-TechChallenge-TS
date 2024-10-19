@@ -2,7 +2,6 @@ import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-cust
 import { Document } from '@core/domain/valueObjects/Document'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { InMemoryCustomerRepository } from '../repositories/in-memory-customer-repository'
-import { describe, beforeEach, it, expect } from 'vitest'
 
 describe('RegisterCustomer', () => {
   let sut: RegisterCustomerUseCase

@@ -1,4 +1,3 @@
-import { describe, beforeEach, it, expect } from 'vitest'
 import Decimal from 'decimal.js'
 import { RegisterProductDto } from '@core/aplication/dtos/register-product-dto'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
