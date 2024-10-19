@@ -20,7 +20,8 @@ describe('AddItemToOrderUseCase', () => {
   })
 
   it('should add a new item to an order', async () => {
-    const order = await mockOrderRepository.register(new Order())
+    const order = new Order()
+    await mockOrderRepository.register(order)
     const product = makeProduct({
       name: 'Hamburguer duplo',
       price: new Decimal(10),
@@ -28,11 +29,13 @@ describe('AddItemToOrderUseCase', () => {
     await mockProductRepository.register(product)
     const quantity = 2
 
-    const updatedOrder = await sut.execute(
-      order.getId(),
-      product.getId(),
-      quantity,
-    )
+    const updatedOrder = (
+      await sut.execute({
+        orderId: order.getId(),
+        productId: product.getId(),
+        quantity,
+      })
+    ).order
 
     expect(updatedOrder.getItems()).toHaveLength(1)
     expect(updatedOrder.getItems()[0].getProduct().getId()).toBe(
@@ -43,7 +46,9 @@ describe('AddItemToOrderUseCase', () => {
   })
 
   it('should update an existing item in an order', async () => {
-    const order = await mockOrderRepository.register(new Order())
+    const order = new Order()
+    await mockOrderRepository.register(order)
+
     const product = makeProduct({
       name: 'Hamburguer duplo',
       price: new Decimal(10),
@@ -51,8 +56,19 @@ describe('AddItemToOrderUseCase', () => {
     await mockProductRepository.register(product)
     const quantity = 2
 
-    await sut.execute(order.getId(), product.getId(), quantity)
-    const updatedOrder = await sut.execute(order.getId(), product.getId(), 3)
+    await sut.execute({
+      orderId: order.getId(),
+      productId: product.getId(),
+      quantity,
+    })
+
+    const updatedOrder = (
+      await sut.execute({
+        orderId: order.getId(),
+        productId: product.getId(),
+        quantity: 3,
+      })
+    ).order
 
     expect(updatedOrder.getItems()).toHaveLength(1)
     expect(updatedOrder.getItems()[0].getProduct().getId()).toBe(
@@ -67,16 +83,21 @@ describe('AddItemToOrderUseCase', () => {
     const quantity = 2
 
     await expect(
-      sut.execute('invalid_order_id', productId, quantity),
+      sut.execute({ orderId: 'invalid_order_id', productId, quantity }),
     ).rejects.toThrow('Order not found')
   })
 
   it('should throw an error if product does not exist', async () => {
-    const order = await mockOrderRepository.register(new Order())
+    const order = new Order()
+    await mockOrderRepository.register(order)
     const quantity = 2
 
     await expect(
-      sut.execute(order.getId(), 'invalid_product_id', quantity),
+      sut.execute({
+        orderId: order.getId(),
+        productId: 'invalid_product_id',
+        quantity,
+      }),
     ).rejects.toThrow('Product not found')
   })
 })

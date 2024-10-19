@@ -13,7 +13,7 @@ describe('CreateOrderUseCase', () => {
   })
 
   it('should create a new order', async () => {
-    const order = await sut.execute()
+    const order = (await sut.execute()).order
     const creationDate = order.getCreatedAt()
     const now = new Date()
     const timeDifference = now.getTime() - creationDate.getTime()

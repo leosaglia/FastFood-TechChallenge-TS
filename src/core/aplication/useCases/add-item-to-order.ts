@@ -2,24 +2,23 @@ import { Order } from '@core/domain/entities/Order'
 import { OrderItem } from '@core/domain/entities/OrderItem'
 import { OrderRepository } from '../repositories/order-repository'
 import { ProductRepository } from '../repositories/product-repository'
+import { AddItemToOrderUseCaseRequest } from '../dtos/request/add-item-to-order-use-case-request'
+
+interface AddItemToOrderUseCaseResponse {
+  order: Order
+}
 
 export class AddItemToOrderUseCase {
-  private orderRepository: OrderRepository
-  private productRepository: ProductRepository
-
   constructor(
-    orderRepository: OrderRepository,
-    productRepository: ProductRepository,
-  ) {
-    this.orderRepository = orderRepository
-    this.productRepository = productRepository
-  }
+    private orderRepository: OrderRepository,
+    private productRepository: ProductRepository,
+  ) {}
 
-  async execute(
-    orderId: string,
-    productId: string,
-    quantity: number,
-  ): Promise<Order> {
+  async execute({
+    orderId,
+    productId,
+    quantity,
+  }: AddItemToOrderUseCaseRequest): Promise<AddItemToOrderUseCaseResponse> {
     const order = await this.orderRepository.findById(orderId)
     if (!order) {
       throw new Error('Order not found')
@@ -33,6 +32,8 @@ export class AddItemToOrderUseCase {
     const orderItem = new OrderItem(product, quantity)
     order.addItem(orderItem)
 
-    return await this.orderRepository.update(order)
+    await this.orderRepository.update(order)
+
+    return { order }
   }
 }
