@@ -1,14 +1,14 @@
-import { randomUUID } from 'node:crypto'
 import Decimal from 'decimal.js'
 
 import { OrderItem } from './OrderItem'
+import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 
 export class Order {
-  private id: string
+  private id: UniqueEntityId
   private items: OrderItem[] = []
 
   constructor(id?: string) {
-    this.id = id || randomUUID()
+    this.id = new UniqueEntityId(id)
   }
 
   addItem(item: OrderItem): void {
@@ -35,7 +35,7 @@ export class Order {
   }
 
   getId(): string {
-    return this.id
+    return this.id.getValue()
   }
 
   getItems(): OrderItem[] {

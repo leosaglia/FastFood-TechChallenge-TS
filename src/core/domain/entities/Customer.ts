@@ -1,9 +1,8 @@
-import { randomUUID } from 'node:crypto'
-
 import { Document } from '@core/domain/valueObjects/Document'
+import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 
 export class Customer {
-  id: string
+  id: UniqueEntityId
 
   constructor(
     private name: string,
@@ -13,7 +12,7 @@ export class Customer {
   ) {
     this.validateName(name)
     this.validateEmail(email)
-    this.id = id || randomUUID()
+    this.id = new UniqueEntityId(id)
   }
 
   public getName(): string {

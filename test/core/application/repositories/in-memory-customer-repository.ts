@@ -6,9 +6,8 @@ export class InMemoryCustomerRepository implements CustomerRepository {
 
   async findByDocument(document: string): Promise<Customer | null> {
     return (
-      this.customers.find(
-        (customer) => customer.document.getValue() === document,
-      ) || null
+      this.customers.find((customer) => customer.getDocument() === document) ||
+      null
     )
   }
 

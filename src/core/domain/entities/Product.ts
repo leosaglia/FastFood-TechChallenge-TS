@@ -1,10 +1,10 @@
-import { randomUUID } from 'node:crypto'
 import { Decimal } from 'decimal.js'
 
 import { Category } from '@core/domain/valueObjects/Category'
+import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 
 export class Product {
-  private id: string
+  private id: UniqueEntityId
 
   constructor(
     private name: string,
@@ -16,11 +16,11 @@ export class Product {
     this.validateName(name)
     this.validatePrice(price)
     this.validateDescription(description)
-    this.id = id || randomUUID()
+    this.id = new UniqueEntityId(id)
   }
 
   public getId(): string {
-    return this.id
+    return this.id.getValue()
   }
 
   public getName(): string {

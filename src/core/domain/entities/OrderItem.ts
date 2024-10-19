@@ -1,17 +1,17 @@
-import { randomUUID } from 'node:crypto'
 import Decimal from 'decimal.js'
 
 import { Product } from './Product'
+import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 
 export class OrderItem {
-  private id: string
+  private id: UniqueEntityId
   private product: Product
   private quantity: number
 
   constructor(product: Product, quantity: number, id?: string) {
     this.product = product
     this.quantity = quantity
-    this.id = id || randomUUID()
+    this.id = new UniqueEntityId(id)
   }
 
   getTotal(): Decimal {
