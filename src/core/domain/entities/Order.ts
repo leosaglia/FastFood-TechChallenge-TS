@@ -48,6 +48,14 @@ export class Order {
     return this.items
   }
 
+  getCreatedAt(): Date {
+    return this.createdAt
+  }
+
+  getUpdatedAt(): Date {
+    return this.updatedAt
+  }
+
   getStatus(): OrderStatus {
     return this.status
   }
