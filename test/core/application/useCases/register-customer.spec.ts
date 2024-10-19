@@ -2,6 +2,7 @@ import { Document } from '@core/domain/valueObjects/Document'
 import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-customer'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { InMemoryCustomerRepository } from '../repositories/in-memory-customer-repository'
+import { makeRegisterCustomerRequest } from '@test/factories/customer-factory'
 
 describe('RegisterCustomer', () => {
   let sut: RegisterCustomerUseCase
@@ -13,13 +14,9 @@ describe('RegisterCustomer', () => {
   })
 
   it('should register a new customer', async () => {
-    const customer = {
-      name: 'John Doe',
-      document: '111.444.777-35',
-      email: 'john.doe@example.com',
-    }
+    const customer = makeRegisterCustomerRequest()
 
-    const registeredCustomer = await sut.execute(customer)
+    const registeredCustomer = (await sut.execute(customer)).customer
 
     expect(registeredCustomer?.getDocument()).toEqual(
       new Document(customer.document).getValue(),
@@ -30,11 +27,7 @@ describe('RegisterCustomer', () => {
   })
 
   it('should throw an error if customer already exists', async () => {
-    const customer = {
-      name: 'John Doe',
-      document: '111.444.777-35',
-      email: 'john.doe@example.com',
-    }
+    const customer = makeRegisterCustomerRequest()
 
     await sut.execute(customer)
 
@@ -43,23 +36,17 @@ describe('RegisterCustomer', () => {
     )
   })
 
-  const customerWithInvalidDocument = {
-    name: 'John Doe',
+  const customerWithInvalidDocument = makeRegisterCustomerRequest({
     document: 'invalid_document',
-    email: 'john.doe@example.com',
-  }
+  })
 
-  const customerWithInvalidEmail = {
-    name: 'John Doe',
-    document: '111.444.777-35',
+  const customerWithInvalidEmail = makeRegisterCustomerRequest({
     email: 'invalid_email',
-  }
+  })
 
-  const CustomerWithEmptyName = {
+  const CustomerWithEmptyName = makeRegisterCustomerRequest({
     name: '',
-    document: '111.444.777-35',
-    email: 'john.doe@example.com',
-  }
+  })
 
   it.each([
     [customerWithInvalidDocument, 'Invalid document.'],

@@ -21,7 +21,7 @@ describe('IdentifyCustomerByDocument', () => {
     )
     mockCustomerRepository.register(customer)
 
-    const identifiedCustomer = await sut.execute('111.444.777-35')
+    const identifiedCustomer = (await sut.execute('111.444.777-35')).customer
 
     expect(identifiedCustomer).toBe(customer)
   })

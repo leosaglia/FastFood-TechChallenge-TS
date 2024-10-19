@@ -1,13 +1,12 @@
 import Decimal from 'decimal.js'
 
 import { Order } from '@core/domain/entities/Order'
-import { Product } from '@core/domain/entities/Product'
-import { Category } from '@core/domain/valueObjects/Category'
 import { OrderRepository } from '@core/aplication/repositories/order-repository'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 import { AddItemToOrderUseCase } from '@core/aplication/useCases/add-item-to-order'
 import { InMemoryOrderRepository } from '../repositories/in-memory-order-repository'
 import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
+import { makeProduct } from '@test/factories/product-factory'
 
 describe('AddItemToOrderUseCase', () => {
   let sut: AddItemToOrderUseCase
@@ -22,14 +21,11 @@ describe('AddItemToOrderUseCase', () => {
 
   it('should add a new item to an order', async () => {
     const order = await mockOrderRepository.register(new Order())
-    const product = await mockProductRepository.register(
-      new Product(
-        'Hamburguer duplo',
-        new Decimal(10),
-        'Hamburguer duplo com queijo',
-        new Category('Lanche'),
-      ),
-    )
+    const product = makeProduct({
+      name: 'Hamburguer duplo',
+      price: new Decimal(10),
+    })
+    await mockProductRepository.register(product)
     const quantity = 2
 
     const updatedOrder = await sut.execute(
@@ -48,14 +44,11 @@ describe('AddItemToOrderUseCase', () => {
 
   it('should update an existing item in an order', async () => {
     const order = await mockOrderRepository.register(new Order())
-    const product = await mockProductRepository.register(
-      new Product(
-        'Hamburguer duplo',
-        new Decimal(10),
-        'Hamburguer duplo com queijo',
-        new Category('Lanche'),
-      ),
-    )
+    const product = makeProduct({
+      name: 'Hamburguer duplo',
+      price: new Decimal(10),
+    })
+    await mockProductRepository.register(product)
     const quantity = 2
 
     await sut.execute(order.getId(), product.getId(), quantity)

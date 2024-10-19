@@ -5,17 +5,15 @@ import { Category } from '@core/domain/valueObjects/Category'
 export class InMemoryProductRepository implements ProductRepository {
   private products: Product[] = []
 
-  async register(product: Product): Promise<Product> {
+  async register(product: Product): Promise<void> {
     this.products.push(product)
-    return product
   }
 
-  async edit(product: Product): Promise<Product> {
+  async edit(product: Product): Promise<void> {
     const productIndex = this.products.findIndex(
       (p) => p.getId() === product.getId(),
     )
     this.products[productIndex] = product
-    return product
   }
 
   async delete(id: string): Promise<void> {

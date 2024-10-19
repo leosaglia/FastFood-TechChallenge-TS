@@ -1,18 +1,21 @@
 import { Customer } from '@core/domain/entities/Customer'
 import { Document } from '@core/domain/valueObjects/Document'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
-import { RegisterCustomerDto } from '@core/aplication/dtos/register-customer-dto'
+import { RegisterCustomerUseCaseRequest } from '@core/aplication/dtos/request/register-customer-use-case-request'
+
+export interface RegisterCustomerUseCaseResponse {
+  customer: Customer
+}
 
 export class RegisterCustomerUseCase {
-  private customerRepository: CustomerRepository
+  constructor(private customerRepository: CustomerRepository) {}
 
-  constructor(customerRepository: CustomerRepository) {
-    this.customerRepository = customerRepository
-  }
-
-  async execute(dto: RegisterCustomerDto): Promise<Customer> {
-    const document = new Document(dto.document)
-    const customer = new Customer(dto.name, document, dto.email)
+  async execute({
+    document,
+    name,
+    email,
+  }: RegisterCustomerUseCaseRequest): Promise<RegisterCustomerUseCaseResponse> {
+    const customer = new Customer(name, new Document(document), email)
 
     const customerFound = await this.customerRepository.findByDocument(
       customer.getDocument(),
@@ -22,6 +25,8 @@ export class RegisterCustomerUseCase {
       throw new Error('Customer already exists.')
     }
 
-    return this.customerRepository.register(customer)
+    this.customerRepository.register(customer)
+
+    return { customer }
   }
 }

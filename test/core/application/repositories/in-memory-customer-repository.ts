@@ -11,8 +11,7 @@ export class InMemoryCustomerRepository implements CustomerRepository {
     )
   }
 
-  async register(customer: Customer): Promise<Customer> {
+  async register(customer: Customer): Promise<void> {
     this.customers.push(customer)
-    return customer
   }
 }
