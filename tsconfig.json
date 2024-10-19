@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@core/*": ["core/*"],
-      "@adapter/*": ["adapter/*"],
+      "@core/*": ["src/core/*"],
+      "@adapter/*": ["src/adapter/*"],
+      "@test/*": ["test/*"],
     },
     "types": [
       "vitest/globals"

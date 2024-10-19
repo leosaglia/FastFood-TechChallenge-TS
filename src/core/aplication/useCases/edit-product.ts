@@ -1,31 +1,38 @@
 import { Product } from '@core/domain/entities/Product'
-import { EditProductDto } from '@core/aplication/dtos/edit-product-dto'
 import { Category } from '@core/domain/valueObjects/Category'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { EditProductUseCaseRequest } from '../dtos/request/edit-product-use-case-request'
+
+interface EditProductUseCaseResponse {
+  product: Product
+}
 
 export class EditProductUseCase {
-  private productRepository: ProductRepository
+  constructor(private productRepository: ProductRepository) {}
 
-  constructor(productRepository: ProductRepository) {
-    this.productRepository = productRepository
-  }
-
-  async execute(dto: EditProductDto): Promise<Product> {
-    const productFound = await this.productRepository.findById(dto.id)
+  async execute({
+    id,
+    name,
+    price,
+    description,
+    category,
+  }: EditProductUseCaseRequest): Promise<EditProductUseCaseResponse> {
+    const productFound = await this.productRepository.findById(id)
 
     if (!productFound) {
       throw new Error('Product not found.')
     }
 
-    const category = new Category(dto.category)
     const product = new Product(
-      dto.name,
-      dto.price,
-      dto.description,
-      category,
-      dto.id,
+      name,
+      price,
+      description,
+      new Category(category),
+      id,
     )
 
-    return this.productRepository.edit(product)
+    this.productRepository.edit(product)
+
+    return { product }
   }
 }

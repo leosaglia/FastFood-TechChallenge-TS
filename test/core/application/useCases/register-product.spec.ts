@@ -1,8 +1,8 @@
 import Decimal from 'decimal.js'
-import { RegisterProductDto } from '@core/aplication/dtos/register-product-dto'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 import { RegisterProductUseCase } from '@core/aplication/useCases/register-product'
 import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
+import { makeRegisterProductRequest } from '@test/factories/product-factory'
 
 describe('RegisterProductUseCase', () => {
   let sut: RegisterProductUseCase
@@ -14,49 +14,30 @@ describe('RegisterProductUseCase', () => {
   })
 
   it('should register a product successfully', async () => {
-    const dto: RegisterProductDto = {
-      name: 'Duplo Cheddar',
-      price: new Decimal(100),
-      description: 'Pão, carne, queijo, bacon, tomate, alface e maionese.',
-      category: 'Lanche',
-    }
+    const product = makeRegisterProductRequest()
 
-    const registeredProduct = await sut.execute(dto)
+    const registeredProduct = (await sut.execute(product)).product
 
-    expect(registeredProduct.getName()).toBe(dto.name)
-    expect(registeredProduct.getPrice()).toStrictEqual(dto.price)
-    expect(registeredProduct.getDescription()).toBe(dto.description)
-    expect(registeredProduct.getCategory().getValue()).toBe(dto.category)
+    expect(registeredProduct.getName()).toBe(product.name)
+    expect(registeredProduct.getPrice()).toStrictEqual(product.price)
+    expect(registeredProduct.getDescription()).toBe(product.description)
+    expect(registeredProduct.getCategory().getValue()).toBe(product.category)
     expect(registeredProduct.getId()).toBeDefined()
   })
 
-  const productWithInvalidName = {
-    name: '',
-    price: new Decimal(100),
-    description: 'Pão, carne, queijo, bacon, tomate, alface e maionese.',
-    category: 'Lanche',
-  }
+  const productWithInvalidName = makeRegisterProductRequest({ name: '' })
 
-  const productWithInvalidPrice = {
-    name: 'Duplo Cheddar',
+  const productWithInvalidPrice = makeRegisterProductRequest({
     price: new Decimal(-100),
-    description: 'Pão, carne, queijo, bacon, tomate, alface e maionese.',
-    category: 'Lanche',
-  }
+  })
 
-  const productWithInvalidDescription = {
-    name: 'Duplo Cheddar',
-    price: new Decimal(100),
+  const productWithInvalidDescription = makeRegisterProductRequest({
     description: '',
-    category: 'Lanche',
-  }
+  })
 
-  const productWithInvalidCategory = {
-    name: 'Duplo Cheddar',
-    price: new Decimal(100),
-    description: 'Pão, carne, queijo, bacon, tomate, alface e maionese.',
+  const productWithInvalidCategory = makeRegisterProductRequest({
     category: 'Invalid Category',
-  }
+  })
 
   it.each([
     [productWithInvalidName, 'Invalid name.'],

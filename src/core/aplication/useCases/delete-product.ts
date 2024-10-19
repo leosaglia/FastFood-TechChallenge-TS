@@ -1,11 +1,7 @@
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 
 export class DeleteProductUseCase {
-  private productRepository: ProductRepository
-
-  constructor(productRepository: ProductRepository) {
-    this.productRepository = productRepository
-  }
+  constructor(private productRepository: ProductRepository) {}
 
   async execute(productId: string): Promise<void> {
     const product = await this.productRepository.findById(productId)

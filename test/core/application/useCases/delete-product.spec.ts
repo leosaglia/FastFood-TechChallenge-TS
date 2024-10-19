@@ -1,9 +1,6 @@
-import { Decimal } from 'decimal.js'
-
-import { Category } from '@core/domain/valueObjects/Category'
 import { DeleteProductUseCase } from '@core/aplication/useCases/delete-product'
 import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
-import { Product } from '@core/domain/entities/Product'
+import { makeProduct } from '@test/factories/product-factory'
 
 describe('DeleteProductUseCase', () => {
   let sut: DeleteProductUseCase
@@ -16,14 +13,7 @@ describe('DeleteProductUseCase', () => {
 
   it('should delete a product successfully', async () => {
     const productId = '123'
-    const category = new Category('Acompanhamento')
-    const existingProduct = new Product(
-      'Existing Product',
-      new Decimal(100),
-      'Existing Description',
-      category,
-      productId,
-    )
+    const existingProduct = makeProduct({ id: productId })
     mockProductRepository.register(existingProduct)
 
     await sut.execute(productId)

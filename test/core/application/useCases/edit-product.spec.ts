@@ -1,10 +1,12 @@
 import { Decimal } from 'decimal.js'
 
 import { Category } from '@core/domain/valueObjects/Category'
-import { Product } from '@core/domain/entities/Product'
-import { EditProductDto } from '@core/aplication/dtos/edit-product-dto'
 import { EditProductUseCase } from '@core/aplication/useCases/edit-product'
 import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
+import {
+  makeEditProductRequest,
+  makeProduct,
+} from '@test/factories/product-factory'
 
 describe('EditProductUseCase', () => {
   let sut: EditProductUseCase
@@ -16,75 +18,44 @@ describe('EditProductUseCase', () => {
   })
 
   it('should edit a product successfully', async () => {
-    const existingProduct = new Product(
-      'Existing Product',
-      new Decimal(100),
-      'Existing Description',
-      new Category('Acompanhamento'),
-      '1',
-    )
+    const existingProduct = makeProduct({
+      id: '1',
+      category: new Category('Acompanhamento'),
+    })
     mockProductRepository.register(existingProduct)
 
-    const dto: EditProductDto = {
+    const productToEdit = makeEditProductRequest({
       id: '1',
-      name: 'Updated Product',
-      price: new Decimal(150),
-      description: 'Updated Description',
       category: 'Bebida',
-    }
+    })
 
-    const updatedProduct = await sut.execute(dto)
+    const updatedProduct = (await sut.execute(productToEdit)).product
 
-    expect(updatedProduct.getName()).toBe(dto.name)
-    expect(updatedProduct.getPrice()).toStrictEqual(dto.price)
-    expect(updatedProduct.getDescription()).toBe(dto.description)
-    expect(updatedProduct.getCategory().getValue()).toBe(dto.category)
-    expect(updatedProduct.getId()).toBe(dto.id)
+    expect(updatedProduct.getName()).toBe(productToEdit.name)
+    expect(updatedProduct.getPrice()).toStrictEqual(productToEdit.price)
+    expect(updatedProduct.getDescription()).toBe(productToEdit.description)
+    expect(updatedProduct.getCategory().getValue()).toBe(productToEdit.category)
+    expect(updatedProduct.getId()).toBe(productToEdit.id)
   })
 
   it('should throw an error if product is not found', async () => {
-    const dto: EditProductDto = {
-      id: 'non-existent-id',
-      name: 'Updated Product',
-      price: new Decimal(150),
-      description: 'Updated Description',
-      category: new Category('Bebida').getValue(),
-    }
-
-    await expect(sut.execute(dto)).rejects.toThrow('Product not found.')
+    const product = makeEditProductRequest({ id: 'non-existent-id' })
+    await expect(sut.execute(product)).rejects.toThrow('Product not found.')
   })
 
-  const productWithInvalidName: EditProductDto = {
-    id: '1',
-    name: '',
-    price: new Decimal(100),
-    description: 'Pão, carne, queijo, bacon, tomate, alface e maionese.',
-    category: 'Lanche',
-  }
+  const productWithInvalidName = makeEditProductRequest({ name: '' })
 
-  const productWithInvalidPrice: EditProductDto = {
-    id: '1',
-    name: 'Duplo Cheddar',
-    price: new Decimal(-100),
-    description: 'Pão, carne, queijo, bacon, tomate, alface e maionese.',
-    category: 'Lanche',
-  }
+  const productWithInvalidPrice = makeEditProductRequest({
+    price: new Decimal(-1),
+  })
 
-  const productWithInvalidDescription: EditProductDto = {
-    id: '1',
-    name: 'Duplo Cheddar',
-    price: new Decimal(100),
+  const productWithInvalidDescription = makeEditProductRequest({
     description: '',
-    category: 'Lanche',
-  }
+  })
 
-  const productWithInvalidCategory: EditProductDto = {
-    id: '1',
-    name: 'Duplo Cheddar',
-    price: new Decimal(100),
-    description: 'Pão, carne, queijo, bacon, tomate, alface e maionese.',
-    category: 'Invalid Category',
-  }
+  const productWithInvalidCategory = makeEditProductRequest({
+    category: 'invalid_category',
+  })
 
   it.each([
     [productWithInvalidName, 'Invalid name.'],
@@ -94,13 +65,7 @@ describe('EditProductUseCase', () => {
   ])(
     'should throw an error if product data is invalid',
     async (invalidProduct, excMessage) => {
-      const existingProduct = new Product(
-        'Existing Product',
-        new Decimal(100),
-        'Existing Description',
-        new Category('Acompanhamento'),
-        '1',
-      )
+      const existingProduct = makeProduct()
       mockProductRepository.register(existingProduct)
 
       await expect(sut.execute(invalidProduct)).rejects.toThrow(excMessage)

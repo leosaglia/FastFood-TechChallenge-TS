@@ -1,6 +1,6 @@
-import Decimal from 'decimal.js'
+import { Decimal } from 'decimal.js'
 
-export interface EditProductDto {
+export interface EditProductUseCaseRequest {
   id: string
   name: string
   price: Decimal

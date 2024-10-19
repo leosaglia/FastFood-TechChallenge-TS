@@ -2,25 +2,31 @@ import { Decimal } from 'decimal.js'
 
 import { Product } from '@core/domain/entities/Product'
 import { Category } from '@core/domain/valueObjects/Category'
-import { RegisterProductDto } from '@core/aplication/dtos/register-product-dto'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { RegisterProductUseCaseRequest } from '../dtos/request/register-product-use-case-request'
+
+interface RegisterProductUseCaseResponse {
+  product: Product
+}
 
 export class RegisterProductUseCase {
-  private productRepository: ProductRepository
+  constructor(private productRepository: ProductRepository) {}
 
-  constructor(productRepository: ProductRepository) {
-    this.productRepository = productRepository
-  }
-
-  async execute(dto: RegisterProductDto): Promise<Product> {
-    const category = new Category(dto.category)
+  async execute({
+    name,
+    price,
+    description,
+    category,
+  }: RegisterProductUseCaseRequest): Promise<RegisterProductUseCaseResponse> {
     const product = new Product(
-      dto.name,
-      new Decimal(dto.price),
-      dto.description,
-      category,
+      name,
+      new Decimal(price),
+      description,
+      new Category(category),
     )
 
-    return await this.productRepository.register(product)
+    await this.productRepository.register(product)
+
+    return { product }
   }
 }
