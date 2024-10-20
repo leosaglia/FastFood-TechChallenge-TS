@@ -21,6 +21,12 @@ export class InMemoryProductRepository implements ProductRepository {
   }
 
   async findById(id: string): Promise<Product | null> {
+    /* Ver comportamento Promise.all 
+    console.log('procurando por id: ', id)
+    await new Promise((resolve) => setTimeout(resolve, 4000))
+    console.log('acho por id: ', id)
+    */
+
     return this.products.find((p) => p.getId() === id) || null
   }
 
