@@ -1,7 +1,7 @@
 import { Document } from '@core/domain/valueObjects/Document'
 import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-customer'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
-import { InMemoryCustomerRepository } from '../repositories/in-memory-customer-repository'
+import { InMemoryCustomerRepository } from '@adapter/driven/repositories/in-memory/in-memory-customer-repository'
 import { makeRegisterCustomerRequest } from '@test/factories/customer-factory'
 import { Customer } from '@core/domain/entities/Customer'
 import { ResourceAlreadyExistsError } from '@core/error-handling/resource-already-exists-error'

@@ -1,5 +1,5 @@
 import { DeleteProductUseCase } from '@core/aplication/useCases/delete-product'
-import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
+import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import { makeProduct } from '@test/factories/product-factory'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 

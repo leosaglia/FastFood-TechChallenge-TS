@@ -1,6 +1,6 @@
 import { Category } from '@core/domain/valueObjects/Category'
 import { FindProductsByCategoryUseCase } from '@core/aplication/useCases/find-products-by-category'
-import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
+import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import { makeProduct } from '@test/factories/product-factory'
 import { Product } from '@core/domain/entities/Product'
 import { BadRequestError } from '@core/error-handling/bad-request-error'

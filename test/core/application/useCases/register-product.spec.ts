@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 import { RegisterProductUseCase } from '@core/aplication/useCases/register-product'
-import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
+import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import { makeRegisterProductRequest } from '@test/factories/product-factory'
 import { Product } from '@core/domain/entities/Product'
 import { BadRequestError } from '@core/error-handling/bad-request-error'

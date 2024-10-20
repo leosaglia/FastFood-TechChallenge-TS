@@ -2,7 +2,7 @@ import { Decimal } from 'decimal.js'
 
 import { Category } from '@core/domain/valueObjects/Category'
 import { EditProductUseCase } from '@core/aplication/useCases/edit-product'
-import { InMemoryProductRepository } from '../repositories/in-memory-product-repository'
+import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import {
   makeEditProductRequest,
   makeProduct,

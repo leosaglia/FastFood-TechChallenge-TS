@@ -1,7 +1,7 @@
 import { IdentifyCustomerByDocumentUseCase } from '@core/aplication/useCases/identify-customer-by-document'
 import { Customer } from '@core/domain/entities/Customer'
 import { Document } from '@core/domain/valueObjects/Document'
-import { InMemoryCustomerRepository } from '../repositories/in-memory-customer-repository'
+import { InMemoryCustomerRepository } from '@adapter/driven/repositories/in-memory/in-memory-customer-repository'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 
