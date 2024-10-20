@@ -21,10 +21,19 @@ export class Order {
     const existingItem = this.items.find((i) => i.equals(item))
 
     if (existingItem) {
-      this.updateItem(item)
+      this.updateDuplicatedItem(item)
     } else {
       this.items.push(item)
     }
+  }
+
+  private updateDuplicatedItem(updatedItem: OrderItem): void {
+    this.items = this.items.map((item) => {
+      if (item.equals(updatedItem)) {
+        item.setQuantity(item.getQuantity() + updatedItem.getQuantity())
+      }
+      return item
+    })
   }
 
   updateItem(updatedItem: OrderItem): void {

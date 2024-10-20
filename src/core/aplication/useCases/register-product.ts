@@ -4,7 +4,7 @@ import { Product } from '@core/domain/entities/Product'
 import { Category } from '@core/domain/valueObjects/Category'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 import { RegisterProductUseCaseRequest } from '../dtos/request/register-product-use-case-request'
-import { Either, success, failure } from '@core/error-handling/Either'
+import { Either, success, failure } from '@core/error-handling/either'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 

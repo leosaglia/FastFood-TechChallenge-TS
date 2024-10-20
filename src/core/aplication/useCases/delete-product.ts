@@ -1,5 +1,5 @@
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
-import { Either, failure, success } from '@core/error-handling/Either'
+import { Either, failure, success } from '@core/error-handling/either'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 
 type DeleteProductUseCaseResponse = Either<ResourceNotFoundError, object>

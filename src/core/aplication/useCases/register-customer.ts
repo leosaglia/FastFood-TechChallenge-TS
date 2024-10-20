@@ -4,7 +4,7 @@ import { CustomerRepository } from '@core/aplication/repositories/customer-repos
 import { RegisterCustomerUseCaseRequest } from '@core/aplication/dtos/request/register-customer-use-case-request'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
-import { Either, failure, success } from '@core/error-handling/Either'
+import { Either, failure, success } from '@core/error-handling/either'
 import { ResourceAlreadyExistsError } from '@core/error-handling/resource-already-exists-error'
 
 type RegisterCustomerUseCaseResponse = Either<

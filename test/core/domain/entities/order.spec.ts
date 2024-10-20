@@ -2,30 +2,16 @@ import Decimal from 'decimal.js'
 import { Order } from '@core/domain/entities/Order'
 import { OrderItem } from '@core/domain/entities/OrderItem'
 import { OrderStatus } from '@core/domain/enums/order-status'
-import { Product } from '@core/domain/entities/Product'
-import { Category } from '@core/domain/valueObjects/Category'
 
 describe('Order', () => {
   let order: Order
   let item1: OrderItem
   let item2: OrderItem
-  const product1 = new Product(
-    'product1',
-    new Decimal(50),
-    'some cool description',
-    new Category('Bebida'),
-  )
-  const product2 = new Product(
-    'product2',
-    new Decimal(30),
-    'some cool description',
-    new Category('Lanche'),
-  )
 
   beforeEach(() => {
     order = new Order()
-    item1 = new OrderItem(product1, 2)
-    item2 = new OrderItem(product2, 1)
+    item1 = new OrderItem('product1', order.getId(), new Decimal(50), 2)
+    item2 = new OrderItem('product2', order.getId(), new Decimal(30), 1)
   })
 
   it('should create an order instance', () => {
@@ -42,14 +28,14 @@ describe('Order', () => {
 
   it('should update an existing item in the order', () => {
     order.addItem(item1)
-    const updatedItem1 = new OrderItem(product1, 3)
-    order.updateItem(updatedItem1)
+    order.addItem(item1)
+
     expect(
       order
         .getItems()
-        .find((item) => item.equals(updatedItem1))
+        .find((item) => item.equals(item1))
         ?.getQuantity(),
-    ).toBe(3)
+    ).toBe(4)
   })
 
   it('should calculate the total price of the order', () => {

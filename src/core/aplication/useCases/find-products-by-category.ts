@@ -1,7 +1,7 @@
 import { Product } from '@core/domain/entities/Product'
 import { Category } from '@core/domain/valueObjects/Category'
 import { ProductRepository } from '../repositories/product-repository'
-import { Either, failure, success } from '@core/error-handling/Either'
+import { Either, failure, success } from '@core/error-handling/either'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 
