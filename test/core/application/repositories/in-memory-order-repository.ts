@@ -16,4 +16,8 @@ export class InMemoryOrderRepository implements OrderRepository {
     const index = this.orders.findIndex((o) => o.getId() === order.getId())
     this.orders[index] = order
   }
+
+  async list(): Promise<Order[]> {
+    return this.orders
+  }
 }

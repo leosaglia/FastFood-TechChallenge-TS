@@ -32,6 +32,10 @@ export class OrderItem {
     return this.orderId
   }
 
+  getProductPrice(): Decimal {
+    return this.productPrice
+  }
+
   getQuantity(): number {
     return this.quantity
   }
