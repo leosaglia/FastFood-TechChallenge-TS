@@ -1,10 +1,10 @@
 import { Product } from '@core/domain/entities/Product'
 import { Category } from '@core/domain/valueObjects/Category'
 
-export interface ProductRepository {
-  register(product: Product): Promise<void>
-  edit(product: Product): Promise<void>
-  delete(id: string): Promise<void>
-  findById(id: string): Promise<Product | null>
-  findByCategory(category: Category): Promise<Product[]>
+export abstract class ProductRepository {
+  abstract register(product: Product): Promise<void>
+  abstract edit(product: Product): Promise<void>
+  abstract delete(id: string): Promise<void>
+  abstract findById(id: string): Promise<Product | null>
+  abstract findByCategory(category: Category): Promise<Product[]>
 }

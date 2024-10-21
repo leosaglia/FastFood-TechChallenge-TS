@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:3000
+
+# @name criar_produto
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Duplo Burguer",
+  "description": "Contém 2 hamburgueres com queijo",
+  "category": "Lanche",
+  "price": 100
+}
+
+###
+
+# @name listar_produtos
+GET {{baseUrl}}/products
+Content-Type: application/json

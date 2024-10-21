@@ -1,4 +1,7 @@
 {
-    "entryFile": "src/adapter/driver/nest/main",
-    "sourceRoot": "src"    
+    "entryFile": "src/adapter/driver/http/nest/main",
+    "sourceRoot": "src",
+    "compilerOptions": {
+        "deleteOutDir": false
+    }
 }

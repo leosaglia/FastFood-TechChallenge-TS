@@ -2,7 +2,7 @@ import { ProductRepository } from '@core/aplication/repositories/product-reposit
 import { Either, failure, success } from '@core/error-handling/either'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 
-type DeleteProductUseCaseResponse = Either<ResourceNotFoundError, object>
+type DeleteProductUseCaseResponse = Either<ResourceNotFoundError, null>
 
 export class DeleteProductUseCase {
   constructor(private productRepository: ProductRepository) {}
@@ -16,6 +16,6 @@ export class DeleteProductUseCase {
 
     await this.productRepository.delete(productId)
 
-    return success({})
+    return success(null)
   }
 }
