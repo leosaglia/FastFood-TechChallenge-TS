@@ -1,6 +1,6 @@
 import { Customer } from '@core/domain/entities/Customer'
 
-export interface CustomerRepository {
-  register(customer: Customer): Promise<void>
-  findByDocument(document: string): Promise<Customer | null>
+export abstract class CustomerRepository {
+  abstract register(customer: Customer): Promise<void>
+  abstract findByDocument(document: string): Promise<Customer | null>
 }
