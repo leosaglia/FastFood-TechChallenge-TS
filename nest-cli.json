@@ -1,7 +1,8 @@
 {
     "entryFile": "src/adapter/driver/http/nest/main",
+    "collection": "@nestjs/schematics",
     "sourceRoot": "src",
     "compilerOptions": {
-        "deleteOutDir": false
+        "deleteOutDir": true
     }
 }
