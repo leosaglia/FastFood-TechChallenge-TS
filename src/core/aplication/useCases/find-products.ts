@@ -5,24 +5,27 @@ import { Either, failure, success } from '@core/error-handling/either'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 
-type FindProductsByCategoryUseCaseResponse = Either<
+type FindProductsUseCaseResponse = Either<
   BadRequestError | NoMappedError,
   {
     products: Product[]
   }
 >
 
-export class FindProductsByCategoryUseCase {
+export class FindProductsUseCase {
   constructor(private productRepository: ProductRepository) {}
 
-  async execute(
-    category: string,
-  ): Promise<FindProductsByCategoryUseCaseResponse> {
+  async execute(query: {
+    category?: string
+  }): Promise<FindProductsUseCaseResponse> {
     try {
-      const categoryValue = new Category(category)
+      const { category } = query
 
-      const products =
-        await this.productRepository.findByCategory(categoryValue)
+      if (category) {
+        query.category = new Category(category).getValue()
+      }
+
+      const products = await this.productRepository.findMany(query)
 
       return success({ products })
     } catch (error) {
