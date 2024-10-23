@@ -5,14 +5,37 @@ POST {{baseUrl}}/products
 Content-Type: application/json
 
 {
-  "name": "Duplo Burguer",
-  "description": "Contém 2 hamburgueres com queijo",
+  "name": "Batata frita",
+  "description": "Batata frita simples com sal",
+  "category": "Acompanhamento",
+  "price": 5.99
+}
+
+###
+
+# @name editar_produto
+PUT {{baseUrl}}/products/b07ff1c6-fae2-4c5b-9260-01bd3fc98b30
+Content-Type: application/json
+
+{
+  "name": "Burguer Bacon",
+  "description": "Contém 2 hamburgueres com queijo e bacon",
   "category": "Lanche",
-  "price": 100
+  "price": 24.50
 }
 
 ###
 
 # @name listar_produtos
 GET {{baseUrl}}/products
+
+###
+
+# @name listar_produtos_por_categoria
+GET {{baseUrl}}/products?category=lanche
 Content-Type: application/json
+
+###
+
+# @name deletar_produto
+DELETE {{baseUrl}}/products/b07ff1c6-fae2-4c5b-9260-01bd3fc98b30
