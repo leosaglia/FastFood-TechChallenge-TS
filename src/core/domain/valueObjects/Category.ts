@@ -1,13 +1,14 @@
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 export class Category {
-  private readonly validCategories = ['Lanche', 'Bebida', 'Acompanhamento']
+  private readonly validCategories = ['lanche', 'bebida', 'acompanhamento']
 
   constructor(private readonly value: string) {
-    if (!this.isValid(value)) {
+    const lowerCaseValue = value.toLowerCase()
+    if (!this.isValid(lowerCaseValue)) {
       throw new BadRequestError('Invalid category.')
     }
-    this.value = value
+    this.value = lowerCaseValue
   }
 
   private isValid(value: string): boolean {

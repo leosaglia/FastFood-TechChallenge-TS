@@ -72,13 +72,13 @@ describe('ListOrderUseCase', () => {
 
     expect(orders[0].order.orderItems[0].productId).toBe('1')
     expect(orders[0].order.orderItems[0].productName).toBe('Batata frita')
-    expect(orders[0].order.orderItems[0].productCategory).toBe('Acompanhamento')
+    expect(orders[0].order.orderItems[0].productCategory).toBe('acompanhamento')
     expect(orders[0].order.orderItems[0].price.toNumber()).toBe(5)
     expect(orders[0].order.orderItems[0].quantity).toBe(1)
 
     expect(orders[0].order.orderItems[1].productId).toBe('2')
     expect(orders[0].order.orderItems[1].productName).toBe('Hamburguer')
-    expect(orders[0].order.orderItems[1].productCategory).toBe('Acompanhamento')
+    expect(orders[0].order.orderItems[1].productCategory).toBe('acompanhamento')
     expect(orders[0].order.orderItems[1].price.toNumber()).toBe(10)
     expect(orders[0].order.orderItems[1].quantity).toBe(3)
   })

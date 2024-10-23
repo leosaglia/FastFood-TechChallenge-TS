@@ -30,7 +30,7 @@ export function makeRegisterProductRequest(
     name: 'Duplo Cheddar',
     price: new Decimal(100),
     description: 'Pão, carne, queijo, bacon, tomate, alface e maionese.',
-    category: 'Lanche',
+    category: 'lanche',
     ...override,
   }
 }
