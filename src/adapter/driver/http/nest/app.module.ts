@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ProductController } from '../controllers/product.controller'
 import { CustomerController } from '../controllers/customer.controller'
+import { OrderController } from '../controllers/order.controller'
 import { DatabaseModule } from '@adapter/driven/database.module'
 import { NestIdentifyCustomerByDocumentUseCase } from './use-cases/nest-identify-customer-by-document'
 import { NestRegisterCustomerUseCase } from './use-cases/nest-register-customer'
@@ -13,7 +14,7 @@ import { NestListOrderUseCase } from './use-cases/nest-list-orders'
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [ProductController, CustomerController],
+  controllers: [ProductController, CustomerController, OrderController],
   providers: [
     NestIdentifyCustomerByDocumentUseCase,
     NestRegisterCustomerUseCase,

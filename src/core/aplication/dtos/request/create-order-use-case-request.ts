@@ -3,4 +3,5 @@ export interface CreateOrderUseCaseRequest {
     productId: string
     quantity: number
   }>
+  customerId?: string
 }

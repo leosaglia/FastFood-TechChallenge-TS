@@ -58,3 +58,21 @@ Content-Type: application/json
 
 # @name obter_cliente_por_cpf
 GET {{baseUrl}}/customers/11144477735
+
+###
+
+# Pedidos
+
+# @name criar_pedido
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerId": "a7db0e72-0611-4c9e-88a6-edb977fada4f",
+  "items": [
+    {
+      "productId": "3c375341-8191-4f5f-8867-9e81224b372b",
+      "quantity": 2
+    }
+  ]
+}

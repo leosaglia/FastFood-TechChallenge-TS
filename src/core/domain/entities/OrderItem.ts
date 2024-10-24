@@ -24,12 +24,12 @@ export class OrderItem {
     return this.productPrice.mul(this.quantity)
   }
 
-  getProductId(): UniqueEntityId {
-    return this.productId
+  getProductId(): string {
+    return this.productId.getValue()
   }
 
-  getOrderId(): UniqueEntityId {
-    return this.orderId
+  getOrderId(): string {
+    return this.orderId.getValue()
   }
 
   getProductPrice(): Decimal {
@@ -46,8 +46,8 @@ export class OrderItem {
 
   equals(other: OrderItem): boolean {
     return (
-      this.getProductId().getValue() === other.getProductId().getValue() &&
-      this.getOrderId().getValue() === other.getOrderId().getValue()
+      this.getProductId() === other.getProductId() &&
+      this.getOrderId() === other.getOrderId()
     )
   }
 }

@@ -30,4 +30,16 @@ export default class PrismaCustomerRepository implements CustomerRepository {
 
     return PrismaCustomerMapper.toDomain(customer)
   }
+
+  async findById(customerId: string): Promise<Customer | null> {
+    const customer = await this.prisma.customer.findUnique({
+      where: { id: customerId },
+    })
+
+    if (!customer) {
+      return null
+    }
+
+    return PrismaCustomerMapper.toDomain(customer)
+  }
 }

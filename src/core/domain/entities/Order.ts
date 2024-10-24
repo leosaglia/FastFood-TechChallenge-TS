@@ -7,6 +7,7 @@ import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 export class Order {
   private id: UniqueEntityId
   private items: OrderItem[] = []
+  private customerId?: UniqueEntityId
   private createdAt: Date
   private updatedAt: Date
   private status: OrderStatus = OrderStatus.CREATED
@@ -67,5 +68,13 @@ export class Order {
 
   getStatus(): OrderStatus {
     return this.status
+  }
+
+  setCustomerId(customerId: string): void {
+    this.customerId = new UniqueEntityId(customerId)
+  }
+
+  getCustomerId(): string | undefined {
+    return this.customerId?.getValue()
   }
 }

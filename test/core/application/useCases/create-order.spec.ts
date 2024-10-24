@@ -5,18 +5,28 @@ import { OrderRepository } from '@core/aplication/repositories/order-repository'
 import { InMemoryOrderRepository } from '@adapter/driven/repositories/in-memory/in-memory-order-repository'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
+import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { InMemoryCustomerRepository } from '@adapter/driven/repositories/in-memory/in-memory-customer-repository'
 import { makeProduct } from '@test/factories/product-factory'
+import { makeCustomer } from '@test/factories/customer-factory'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
+import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 
 describe('CreateOrderUseCase', () => {
   let sut: CreateOrderUseCase
   let mockOrderRepository: OrderRepository
   let mockProductRepository: ProductRepository
+  let mockCustomerRepository: CustomerRepository
 
   beforeEach(() => {
     mockOrderRepository = new InMemoryOrderRepository()
     mockProductRepository = new InMemoryProductRepository()
-    sut = new CreateOrderUseCase(mockOrderRepository, mockProductRepository)
+    mockCustomerRepository = new InMemoryCustomerRepository()
+    sut = new CreateOrderUseCase(
+      mockOrderRepository,
+      mockProductRepository,
+      mockCustomerRepository,
+    )
   })
 
   it('should create a new order with products', async () => {
@@ -46,12 +56,31 @@ describe('CreateOrderUseCase', () => {
     expect(order).toBeDefined()
     expect(order.getId()).toBeDefined()
     expect(order.getItems()).toHaveLength(2)
-    expect(order.getItems()[0].getProductId().getValue()).toBe('1')
-    expect(order.getItems()[1].getProductId().getValue()).toBe('2')
+    expect(order.getItems()[0].getProductId()).toBe('1')
+    expect(order.getItems()[1].getProductId()).toBe('2')
     expect(order.getStatus()).toBe(OrderStatus.CREATED)
     expect(creationDate).toBeInstanceOf(Date)
     expect(order.getUpdatedAt()).toBeInstanceOf(Date)
     expect(timeDifference).toBeLessThan(1000)
+  })
+
+  it('should create a new order with customer', async () => {
+    mockProductRepository.register(makeProduct({ id: '1' }))
+    mockCustomerRepository.register(makeCustomer({ id: '1' }))
+    const result = await sut.execute({
+      items: [
+        {
+          productId: '1',
+          quantity: 1,
+        },
+      ],
+      customerId: '1',
+    })
+
+    expect(result.isSuccess()).toBe(true)
+
+    const { order } = result.value as { order: Order }
+    expect(order.getCustomerId()).toBe('1')
   })
 
   it('should agrupe products when duplicated in same order', async () => {
@@ -73,7 +102,7 @@ describe('CreateOrderUseCase', () => {
 
     const { order } = result.value as { order: Order }
     expect(order.getItems()).toHaveLength(1)
-    expect(order.getItems()[0].getProductId().getValue()).toBe('1')
+    expect(order.getItems()[0].getProductId()).toBe('1')
     expect(order.getItems()[0].getQuantity()).toBe(6)
   })
 
@@ -99,8 +128,26 @@ describe('CreateOrderUseCase', () => {
     })
 
     expect(result.isFailure()).toBe(true)
-    expect(result.value).toBeInstanceOf(BadRequestError)
-    const error = result.value as BadRequestError
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    const error = result.value as ResourceNotFoundError
     expect(error.message).toBe('Product not found')
+  })
+
+  it('should return an error when a customer is not found', async () => {
+    mockProductRepository.register(makeProduct({ id: '1' }))
+    const result = await sut.execute({
+      items: [
+        {
+          productId: '1',
+          quantity: 1,
+        },
+      ],
+      customerId: '1',
+    })
+
+    expect(result.isFailure()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    const error = result.value as ResourceNotFoundError
+    expect(error.message).toBe('Customer not found')
   })
 })
