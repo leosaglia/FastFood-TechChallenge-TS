@@ -7,7 +7,7 @@ export class Document {
     if (!this.isValid(value)) {
       throw new BadRequestError('Invalid document.')
     }
-    this.value = value
+    this.value = value.replace(/\D/g, '')
   }
 
   private isValid(value: string): boolean {

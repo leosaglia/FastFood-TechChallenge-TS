@@ -16,6 +16,10 @@ export class Customer {
     this.id = new UniqueEntityId(id)
   }
 
+  public getId(): string {
+    return this.id.getValue()
+  }
+
   public getName(): string {
     return this.name
   }

@@ -39,3 +39,22 @@ Content-Type: application/json
 
 # @name deletar_produto
 DELETE {{baseUrl}}/products/b07ff1c6-fae2-4c5b-9260-01bd3fc98b30
+
+###
+
+# Customer
+
+# @name criar_cliente
+POST {{baseUrl}}/customers
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "document": "111.444.777-35"
+}
+
+###
+
+# @name obter_cliente_por_cpf
+GET {{baseUrl}}/customers/11144477735
