@@ -25,7 +25,7 @@ describe('RegisterProductUseCase', () => {
     expect(registeredProduct.getName()).toBe(product.name)
     expect(registeredProduct.getPrice()).toStrictEqual(product.price)
     expect(registeredProduct.getDescription()).toBe(product.description)
-    expect(registeredProduct.getCategory().getValue()).toBe(product.category)
+    expect(registeredProduct.getCategory()).toBe(product.category)
     expect(registeredProduct.getId()).toBeDefined()
   })
 

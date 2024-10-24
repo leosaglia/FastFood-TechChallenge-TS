@@ -6,7 +6,7 @@ export class ProductPresenter {
       id: product.getId(),
       name: product.getName(),
       description: product.getDescription(),
-      category: product.getCategory().getValue(),
+      category: product.getCategory(),
       price: product.getPrice().toFixed(2),
     }
   }

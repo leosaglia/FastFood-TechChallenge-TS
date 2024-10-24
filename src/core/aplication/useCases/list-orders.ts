@@ -55,7 +55,7 @@ export class ListOrderUseCase {
             return {
               productId: item.getProductId().toString(),
               productName: product.getName(),
-              productCategory: product.getCategory().getValue(),
+              productCategory: product.getCategory(),
               price: item.getProductPrice(),
               quantity: item.getQuantity(),
             }

@@ -37,6 +37,6 @@ export class InMemoryProductRepository implements ProductRepository {
       return products
     }
 
-    return this.products.filter((p) => p.getCategory().getValue() === category)
+    return this.products.filter((p) => p.getCategory() === category)
   }
 }

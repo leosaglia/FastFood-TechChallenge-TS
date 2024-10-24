@@ -36,8 +36,8 @@ export class Product {
     return this.description
   }
 
-  public getCategory(): Category {
-    return this.category
+  public getCategory(): string {
+    return this.category.getValue()
   }
 
   private validateName(name: string): void {

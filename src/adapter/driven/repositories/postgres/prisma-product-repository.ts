@@ -15,7 +15,7 @@ export default class PrismaProductRepository implements ProductRepository {
         name: product.getName(),
         description: product.getDescription(),
         price: product.getPrice(),
-        category: product.getCategory().getValue(),
+        category: product.getCategory(),
       },
     })
   }
@@ -27,7 +27,7 @@ export default class PrismaProductRepository implements ProductRepository {
         name: product.getName(),
         description: product.getDescription(),
         price: product.getPrice(),
-        category: product.getCategory().getValue(),
+        category: product.getCategory(),
       },
     })
   }

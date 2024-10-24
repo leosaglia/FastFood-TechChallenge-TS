@@ -39,7 +39,7 @@ describe('EditProductUseCase', () => {
     expect(updatedProduct.getName()).toBe(productToEdit.name)
     expect(updatedProduct.getPrice()).toStrictEqual(productToEdit.price)
     expect(updatedProduct.getDescription()).toBe(productToEdit.description)
-    expect(updatedProduct.getCategory().getValue()).toBe(
+    expect(updatedProduct.getCategory()).toBe(
       productToEdit.category.toLowerCase(),
     )
     expect(updatedProduct.getId()).toBe(productToEdit.id)
