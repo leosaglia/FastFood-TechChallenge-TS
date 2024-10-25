@@ -1,3 +1,4 @@
+import { PrismaOrderMapper } from '@adapter/driven/mappers/prisma-order-mapper'
 import { PrismaService } from '@adapter/driven/prisma/prisma.service'
 import { OrderRepository } from '@core/aplication/repositories/order-repository'
 import { Order } from '@core/domain/entities/Order'
@@ -28,7 +29,15 @@ export default class PrismaOrderRepository implements OrderRepository {
     })
   }
 
-  list(): Promise<Order[]> {
-    throw new Error('Method not implemented.')
+  async list(): Promise<Order[]> {
+    const orders = await this.prisma.order.findMany({
+      include: {
+        orderItems: true,
+      },
+    })
+
+    return orders.map((order) => {
+      return PrismaOrderMapper.toDomain(order, order.orderItems)
+    })
   }
 }

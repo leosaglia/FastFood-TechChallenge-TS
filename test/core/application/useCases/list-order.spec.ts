@@ -7,25 +7,7 @@ import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memor
 import { makeProduct } from '@test/factories/product-factory'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
-
-type OrderItemWithProductDetails = {
-  productId: string
-  productName: string
-  productCategory: string
-  price: Decimal
-  quantity: number
-}
-
-type OrderWithItemsAndProducts = {
-  order: {
-    id: string
-    status: string
-    total: Decimal
-    createdAt: Date
-    updatedAt: Date
-    orderItems: OrderItemWithProductDetails[]
-  }
-}
+import { Product } from '@core/domain/entities/Product'
 
 describe('ListOrderUseCase', () => {
   let orderRepository: InMemoryOrderRepository
@@ -59,35 +41,46 @@ describe('ListOrderUseCase', () => {
     orderItem = new OrderItem('2', '1', product2.getPrice(), 3)
     order.addItem(orderItem)
     orderRepository.register(order)
+    orderRepository.register(order)
 
     const result = await listOrderUseCase.execute()
 
     expect(result.isSuccess()).toBeTruthy()
-    const { orders } = result.value as { orders: OrderWithItemsAndProducts[] }
+    const { orders } = result.value as {
+      orders: Array<{
+        order: Order
+        products: Product[]
+      }>
+    }
 
-    expect(orders).toHaveLength(1)
-    expect(orders[0].order.orderItems).toHaveLength(2)
-    expect(orders[0].order.total.toNumber()).toBe(35)
-    expect(orders[0].order.status).toBe('Criado')
+    expect(orders).toHaveLength(2)
+    expect(orders[0].order.getItems()).toHaveLength(2)
+    expect(orders[0].order.getTotal().toNumber()).toBe(35)
+    expect(orders[0].order.getStatus()).toBe('Criado')
 
-    expect(orders[0].order.orderItems[0].productId).toBe('1')
-    expect(orders[0].order.orderItems[0].productName).toBe('Batata frita')
-    expect(orders[0].order.orderItems[0].productCategory).toBe('acompanhamento')
-    expect(orders[0].order.orderItems[0].price.toNumber()).toBe(5)
-    expect(orders[0].order.orderItems[0].quantity).toBe(1)
+    expect(orders[0].order.getItems()[0].getProductId()).toBe('1')
+    expect(orders[0].order.getItems()[0].getProductPrice().toNumber()).toBe(5)
+    expect(orders[0].order.getItems()[0].getQuantity()).toBe(1)
 
-    expect(orders[0].order.orderItems[1].productId).toBe('2')
-    expect(orders[0].order.orderItems[1].productName).toBe('Hamburguer')
-    expect(orders[0].order.orderItems[1].productCategory).toBe('acompanhamento')
-    expect(orders[0].order.orderItems[1].price.toNumber()).toBe(10)
-    expect(orders[0].order.orderItems[1].quantity).toBe(3)
+    expect(orders[0].products).toHaveLength(2)
+    expect(orders[0].products[0].getId()).toBe('1')
+    expect(orders[0].products[0].getName()).toBe('Batata frita')
+    expect(orders[0].products[0].getPrice().toNumber()).toBe(5)
+    expect(orders[0].products[0].getCategory()).toBe('acompanhamento')
+    expect(orders[0].products[1].getId()).toBe('2')
+    expect(orders[0].products[1].getName()).toBe('Hamburguer')
   })
 
   it('should return an empty list if there are no orders', async () => {
     const result = await listOrderUseCase.execute()
 
     expect(result.isSuccess()).toBeTruthy()
-    const { orders } = result.value as { orders: OrderWithItemsAndProducts[] }
+    const { orders } = result.value as {
+      orders: Array<{
+        order: Order
+        products: Product[]
+      }>
+    }
     expect(orders).toStrictEqual([])
   })
 

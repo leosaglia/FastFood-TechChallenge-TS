@@ -80,3 +80,8 @@ Content-Type: application/json
     }
   ]
 }
+
+###
+
+# @name listar_pedidos
+GET {{baseUrl}}/orders

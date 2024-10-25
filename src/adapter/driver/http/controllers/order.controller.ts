@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
   InternalServerErrorException,
   NotFoundException,
   Post,
@@ -13,6 +14,7 @@ import { OrderPresenter } from '../presenters/order-presenter'
 import { NestCreateOrderUseCase } from '../nest/use-cases/nest-create-order'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
+import { NestListOrderUseCase } from '../nest/use-cases/nest-list-orders'
 
 const createOrderSchema = z.object({
   items: z.array(
@@ -28,7 +30,10 @@ type CreateOrderDto = z.infer<typeof createOrderSchema>
 
 @Controller('orders')
 export class OrderController {
-  constructor(private readonly createOrderUseCase: NestCreateOrderUseCase) {}
+  constructor(
+    private readonly createOrderUseCase: NestCreateOrderUseCase,
+    private readonly listOrderUseCase: NestListOrderUseCase,
+  ) {}
 
   @Post()
   @UsePipes(new ZodValidationPipe(createOrderSchema))
@@ -45,6 +50,19 @@ export class OrderController {
     }
 
     return OrderPresenter.present(result.value.order, result.value.products)
+  }
+
+  @Get()
+  async listOrders() {
+    const result = await this.listOrderUseCase.execute()
+
+    if (result.isFailure()) {
+      handleResultError(result.value)
+    }
+
+    return result.value.orders.map(({ order, products }) =>
+      OrderPresenter.present(order, products),
+    )
   }
 }
 

@@ -10,12 +10,22 @@ export class Order {
   private customerId?: UniqueEntityId
   private createdAt: Date
   private updatedAt: Date
-  private status: OrderStatus = OrderStatus.CREATED
+  private status: OrderStatus
 
-  constructor(id?: string) {
+  constructor(
+    id?: string,
+    status?: OrderStatus,
+    customerId?: string,
+    items?: OrderItem[],
+    createdAt?: Date,
+    updatedAt?: Date,
+  ) {
     this.id = new UniqueEntityId(id)
-    this.createdAt = new Date()
-    this.updatedAt = new Date()
+    this.status = status || OrderStatus.CREATED
+    this.customerId = customerId ? new UniqueEntityId(customerId) : undefined
+    this.createdAt = createdAt || new Date()
+    this.updatedAt = updatedAt || new Date()
+    this.items = items || []
   }
 
   addItem(item: OrderItem): void {

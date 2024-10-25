@@ -1,14 +1,13 @@
 import { Order } from '@core/domain/entities/Order'
 import { Product } from '@core/domain/entities/Product'
-import Decimal from 'decimal.js'
 
 interface OrderItemDTO {
   productId: string
   name?: string
-  price?: Decimal
+  price?: string
   category?: string
   quantity: number
-  total: Decimal
+  total: string
 }
 
 interface OrderDTO {
@@ -17,7 +16,7 @@ interface OrderDTO {
   items: OrderItemDTO[]
   customerId?: string
   createdAt: string
-  total: Decimal
+  total: string
 }
 
 export class OrderPresenter {
@@ -30,20 +29,20 @@ export class OrderPresenter {
       return {
         productId: item.getProductId(),
         name: product?.getName(),
-        price: product?.getPrice(),
+        price: product?.getPrice().toFixed(2),
         category: product?.getCategory(),
         quantity: item.getQuantity(),
-        total: item.getTotal(),
+        total: item.getTotal().toFixed(2),
       }
     })
 
     return {
       id: order.getId(),
+      customerId: order.getCustomerId(),
       status: order.getStatus(),
       items: orderItems,
-      customerId: order.getCustomerId(),
+      total: order.getTotal().toFixed(2),
       createdAt: order.getCreatedAt().toISOString(),
-      total: order.getTotal(),
     }
   }
 }
