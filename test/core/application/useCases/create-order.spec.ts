@@ -1,6 +1,7 @@
 import { OrderStatus } from '@core/domain/enums/order-status'
 import { CreateOrderUseCase } from '@core/aplication/useCases/create-order'
 import { Order } from '@core/domain/entities/Order'
+import { Product } from '@core/domain/entities/Product'
 import { OrderRepository } from '@core/aplication/repositories/order-repository'
 import { InMemoryOrderRepository } from '@adapter/driven/repositories/in-memory/in-memory-order-repository'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
@@ -47,7 +48,10 @@ describe('CreateOrderUseCase', () => {
 
     expect(result.isSuccess()).toBe(true)
 
-    const { order } = result.value as { order: Order }
+    const { order, products } = result.value as {
+      order: Order
+      products: Product[]
+    }
     const creationDate = order.getCreatedAt()
     const now = new Date()
     const timeDifference = now.getTime() - creationDate.getTime()
@@ -62,6 +66,10 @@ describe('CreateOrderUseCase', () => {
     expect(creationDate).toBeInstanceOf(Date)
     expect(order.getUpdatedAt()).toBeInstanceOf(Date)
     expect(timeDifference).toBeLessThan(1000)
+
+    expect(products).toHaveLength(2)
+    expect(products[0].getId()).toBe('1')
+    expect(products[1].getId()).toBe('2')
   })
 
   it('should create a new order with customer', async () => {

@@ -14,7 +14,7 @@ Content-Type: application/json
 ###
 
 # @name editar_produto
-PUT {{baseUrl}}/products/b07ff1c6-fae2-4c5b-9260-01bd3fc98b30
+PUT {{baseUrl}}/products/1a442d43-fad4-47ad-91ce-485346ad5a05
 Content-Type: application/json
 
 {
@@ -72,6 +72,10 @@ Content-Type: application/json
   "items": [
     {
       "productId": "3c375341-8191-4f5f-8867-9e81224b372b",
+      "quantity": 2
+    },
+    {
+      "productId": "1a442d43-fad4-47ad-91ce-485346ad5a05",
       "quantity": 2
     }
   ]

@@ -1,4 +1,5 @@
 import { Order } from '@core/domain/entities/Order'
+import { Product } from '@core/domain/entities/Product'
 import { OrderItem } from '@core/domain/entities/OrderItem'
 import { OrderRepository } from '../repositories/order-repository'
 import { ProductRepository } from '../repositories/product-repository'
@@ -13,6 +14,7 @@ type CreateOrderUseCaseResponse = Either<
   NoMappedError | BadRequestError | ResourceNotFoundError,
   {
     order: Order
+    products: Product[]
   }
 >
 
@@ -29,6 +31,7 @@ export class CreateOrderUseCase {
   }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
     try {
       const order = new Order()
+      const products: Product[] = []
 
       if (items.length === 0) {
         return failure(
@@ -48,9 +51,12 @@ export class CreateOrderUseCase {
 
       for (const item of items) {
         const product = await this.productRepository.findById(item.productId)
+
         if (!product) {
           return failure(new ResourceNotFoundError('Product not found'))
         }
+
+        products.push(product)
 
         const orderItem = new OrderItem(
           item.productId,
@@ -63,7 +69,7 @@ export class CreateOrderUseCase {
 
       await this.orderRepository.register(order)
 
-      return success({ order })
+      return success({ order, products })
     } catch (error) {
       if (error instanceof BadRequestError) {
         return failure(error)

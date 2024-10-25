@@ -7,9 +7,10 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common'
-import { NestCreateOrderUseCase } from '../nest/use-cases/nest-create-order'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
+import { OrderPresenter } from '../presenters/order-presenter'
+import { NestCreateOrderUseCase } from '../nest/use-cases/nest-create-order'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 
@@ -43,7 +44,7 @@ export class OrderController {
       handleResultError(result.value)
     }
 
-    return result.value.order
+    return OrderPresenter.present(result.value.order, result.value.products)
   }
 }
 
