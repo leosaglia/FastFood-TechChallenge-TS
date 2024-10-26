@@ -37,24 +37,6 @@ export class CustomerController {
     private readonly identifyCustomerByDocumentUseCase: NestIdentifyCustomerByDocumentUseCase,
   ) {}
 
-  @Get(':document')
-  @ApiOperation({ summary: 'Identify a customer by document' })
-  @ApiParam({ name: 'document', description: 'Customer document', type: 'string' })
-  @ApiResponse({ status: 200, description: 'Customer found', type: CustomerPresenter })
-  @ApiResponse({ status: 400, description: 'Invalid data', type: ErrorResponse })
-  @ApiResponse({ status: 404, description: 'Customer not found', type: ErrorResponse })
-  @ApiResponse({ status: 500, description: 'Internal server error', type: ErrorResponse })
-  async identifyCustomerByDocument(@Param('document') document: string) {
-    const result =
-      await this.identifyCustomerByDocumentUseCase.execute(document)
-
-    if (result.isFailure()) {
-      handleResultError(result.value)
-    }
-
-    return CustomerPresenter.present(result.value.customer)
-  }
-
   @Post()
   @ApiOperation({ summary: 'Create a new customer' })
   @ApiResponse({ status: 201, description: 'Customer created', type: CustomerPresenter })
@@ -69,6 +51,24 @@ export class CustomerController {
       document,
       email,
     })
+
+    if (result.isFailure()) {
+      handleResultError(result.value)
+    }
+
+    return CustomerPresenter.present(result.value.customer)
+  }
+
+  @Get(':document')
+  @ApiOperation({ summary: 'Identify a customer by document' })
+  @ApiParam({ name: 'document', description: 'Customer document', type: 'string' })
+  @ApiResponse({ status: 200, description: 'Customer found', type: CustomerPresenter })
+  @ApiResponse({ status: 400, description: 'Invalid data', type: ErrorResponse })
+  @ApiResponse({ status: 404, description: 'Customer not found', type: ErrorResponse })
+  @ApiResponse({ status: 500, description: 'Internal server error', type: ErrorResponse })
+  async identifyCustomerByDocument(@Param('document') document: string) {
+    const result =
+      await this.identifyCustomerByDocumentUseCase.execute(document)
 
     if (result.isFailure()) {
       handleResultError(result.value)
