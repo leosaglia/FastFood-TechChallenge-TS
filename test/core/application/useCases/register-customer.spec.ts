@@ -2,12 +2,12 @@ import { Document } from '@core/domain/valueObjects/document'
 import { CreateCustomerUseCase } from '@core/aplication/useCases/create-customer'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { InMemoryCustomerRepository } from '@adapter/driven/repositories/in-memory/in-memory-customer-repository'
-import { makeRegisterCustomerRequest } from '@test/factories/customer-factory'
+import { makeCreateCustomerRequest } from '@test/factories/customer-factory'
 import { Customer } from '@core/domain/entities/customer'
 import { ResourceAlreadyExistsError } from '@core/error-handling/resource-already-exists-error'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 
-describe('RegisterCustomer', () => {
+describe('CreateCustomer', () => {
   let sut: CreateCustomerUseCase
   let customerRepository: CustomerRepository
 
@@ -17,25 +17,25 @@ describe('RegisterCustomer', () => {
   })
 
   it('should create a new customer', async () => {
-    const customer = makeRegisterCustomerRequest()
+    const customer = makeCreateCustomerRequest()
 
     const result = await sut.execute(customer)
-    const { customer: registeredCustomer } = result.value as {
+    const { customer: createdCustomer } = result.value as {
       customer: Customer
     }
 
     expect(result.isSuccess()).toBe(true)
 
-    expect(registeredCustomer?.getDocument()).toEqual(
+    expect(createdCustomer?.getDocument()).toEqual(
       new Document(customer.document).getValue(),
     )
-    expect(registeredCustomer?.getEmail()).toEqual(customer.email)
-    expect(registeredCustomer?.getName()).toEqual(customer.name)
-    expect(registeredCustomer?.id).toBeDefined()
+    expect(createdCustomer?.getEmail()).toEqual(customer.email)
+    expect(createdCustomer?.getName()).toEqual(customer.name)
+    expect(createdCustomer?.id).toBeDefined()
   })
 
   it('should throw an error if customer already exists', async () => {
-    const customer = makeRegisterCustomerRequest()
+    const customer = makeCreateCustomerRequest()
 
     await sut.execute(customer)
 
@@ -47,15 +47,15 @@ describe('RegisterCustomer', () => {
     expect(error.message).toBe('Customer already exists.')
   })
 
-  const customerWithInvalidDocument = makeRegisterCustomerRequest({
+  const customerWithInvalidDocument = makeCreateCustomerRequest({
     document: 'invalid_document',
   })
 
-  const customerWithInvalidEmail = makeRegisterCustomerRequest({
+  const customerWithInvalidEmail = makeCreateCustomerRequest({
     email: 'invalid_email',
   })
 
-  const CustomerWithEmptyName = makeRegisterCustomerRequest({
+  const CustomerWithEmptyName = makeCreateCustomerRequest({
     name: '',
   })
 

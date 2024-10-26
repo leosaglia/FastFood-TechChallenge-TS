@@ -30,13 +30,13 @@ describe('IdentifyCustomerByDocument', () => {
     expect(identifiedCustomer.customer).toBe(customer)
   })
 
-  it('should throw an error when the customer was not registered', async () => {
+  it('should throw an error when the customer was not created', async () => {
     const result = await sut.execute('111.444.777-35')
 
     expect(result.isFailure()).toBe(true)
     expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     const error = result.value as ResourceNotFoundError
-    expect(error.message).toBe('Customer not registered')
+    expect(error.message).toBe('Customer not created')
   })
 
   it('should throw an error when the document is invalid', async () => {

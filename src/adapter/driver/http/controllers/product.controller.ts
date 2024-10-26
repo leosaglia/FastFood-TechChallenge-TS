@@ -58,7 +58,7 @@ const querySchema = z.object({
 @Controller('products')
 export class ProductController {
   constructor(
-    private readonly registerProductUseCase: NestCreateProductUseCase,
+    private readonly createProductUseCase: NestCreateProductUseCase,
     private readonly editProductUseCase: NestEditProductUseCase,
     private readonly findProductsUseCase: NestFindProductsUseCase,
     private readonly deleteProductUseCase: NestDeleteProductUseCase,
@@ -73,7 +73,7 @@ export class ProductController {
   async createProduct(@Body() body: CreateProductDto) {
     const { name, description, category, price } = body
 
-    const result = await this.registerProductUseCase.execute({
+    const result = await this.createProductUseCase.execute({
       name,
       price: new Decimal(price),
       description,

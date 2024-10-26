@@ -23,7 +23,7 @@ export function makeProduct({
   return new Product(name, price, description, category, id)
 }
 
-export function makeRegisterProductRequest(
+export function makeCreateProductRequest(
   override: Partial<CreateProductUseCaseRequest> = {},
 ): CreateProductUseCaseRequest {
   return {

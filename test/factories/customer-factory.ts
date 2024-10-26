@@ -9,7 +9,7 @@ interface CustomerProps {
   email: string
 }
 
-export function makeRegisterCustomerRequest(
+export function makeCreateCustomerRequest(
   override: Partial<CreateCustomerUseCaseRequest> = {},
 ): CreateCustomerUseCaseRequest {
   return {

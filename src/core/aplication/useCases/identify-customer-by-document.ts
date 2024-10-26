@@ -25,7 +25,7 @@ export class IdentifyCustomerByDocumentUseCase {
         await this.customerRepository.findByDocument(documentValue)
 
       if (!customer) {
-        return failure(new ResourceNotFoundError('Customer not registered'))
+        return failure(new ResourceNotFoundError('Customer not created'))
       }
 
       return success({ customer })
