@@ -1,6 +1,6 @@
-import { Order } from '@core/domain/entities/Order'
+import { Order } from '@core/domain/entities/order'
 
 export abstract class OrderRepository {
-  abstract register(order: Order): Promise<void>
-  abstract list(): Promise<Order[]>
+  abstract create(order: Order): Promise<void>
+  abstract findMany(): Promise<Order[]>
 }

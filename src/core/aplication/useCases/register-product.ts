@@ -1,7 +1,7 @@
 import { Decimal } from 'decimal.js'
 
-import { Product } from '@core/domain/entities/Product'
-import { Category } from '@core/domain/valueObjects/Category'
+import { Product } from '@core/domain/entities/product'
+import { Category } from '@core/domain/valueObjects/category'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 import { RegisterProductUseCaseRequest } from '../dtos/request/register-product-use-case-request'
 import { Either, success, failure } from '@core/error-handling/either'
@@ -32,7 +32,7 @@ export class RegisterProductUseCase {
         new Category(category),
       )
 
-      await this.productRepository.register(product)
+      await this.productRepository.create(product)
 
       return success({ product })
     } catch (error) {

@@ -1,4 +1,4 @@
-import { Customer } from '@core/domain/entities/Customer'
+import { Customer } from '@core/domain/entities/customer'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 
 export class InMemoryCustomerRepository implements CustomerRepository {
@@ -17,7 +17,7 @@ export class InMemoryCustomerRepository implements CustomerRepository {
     )
   }
 
-  async register(customer: Customer): Promise<void> {
+  async create(customer: Customer): Promise<void> {
     this.customers.push(customer)
   }
 }

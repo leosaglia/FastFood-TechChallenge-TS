@@ -1,13 +1,13 @@
 import Decimal from 'decimal.js'
-import { Order } from '@core/domain/entities/Order'
-import { OrderItem } from '@core/domain/entities/OrderItem'
+import { Order } from '@core/domain/entities/order'
+import { OrderItem } from '@core/domain/entities/orderItem'
 import { ListOrderUseCase } from '@core/aplication/useCases/list-orders'
 import { InMemoryOrderRepository } from '@adapter/driven/repositories/in-memory/in-memory-order-repository'
 import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import { makeProduct } from '@test/factories/product-factory'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
-import { Product } from '@core/domain/entities/Product'
+import { Product } from '@core/domain/entities/product'
 
 describe('ListOrderUseCase', () => {
   let orderRepository: InMemoryOrderRepository
@@ -26,22 +26,22 @@ describe('ListOrderUseCase', () => {
       name: 'Batata frita',
       price: new Decimal(5),
     })
-    productRepository.register(product)
+    productRepository.create(product)
 
     const product2 = makeProduct({
       id: '2',
       name: 'Hamburguer',
       price: new Decimal(10),
     })
-    productRepository.register(product2)
+    productRepository.create(product2)
 
     const order = new Order()
     let orderItem = new OrderItem('1', '1', product.getPrice(), 1)
     order.addItem(orderItem)
     orderItem = new OrderItem('2', '1', product2.getPrice(), 3)
     order.addItem(orderItem)
-    orderRepository.register(order)
-    orderRepository.register(order)
+    orderRepository.create(order)
+    orderRepository.create(order)
 
     const result = await listOrderUseCase.execute()
 
@@ -88,7 +88,7 @@ describe('ListOrderUseCase', () => {
     const order = new Order()
     const orderItem = new OrderItem('1', order.getId(), new Decimal(10), 2)
     order.addItem(orderItem)
-    orderRepository.register(order)
+    orderRepository.create(order)
 
     const result = await listOrderUseCase.execute()
 
@@ -99,7 +99,7 @@ describe('ListOrderUseCase', () => {
   })
 
   it('should handle unexpected errors gracefully', async () => {
-    vi.spyOn(orderRepository, 'list').mockImplementation(() => {
+    vi.spyOn(orderRepository, 'findMany').mockImplementation(() => {
       throw new Error('Unexpected error')
     })
 

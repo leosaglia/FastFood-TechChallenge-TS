@@ -1,13 +1,13 @@
 import { Decimal } from 'decimal.js'
 
-import { Category } from '@core/domain/valueObjects/Category'
+import { Category } from '@core/domain/valueObjects/category'
 import { EditProductUseCase } from '@core/aplication/useCases/edit-product'
 import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import {
   makeEditProductRequest,
   makeProduct,
 } from '@test/factories/product-factory'
-import { Product } from '@core/domain/entities/Product'
+import { Product } from '@core/domain/entities/product'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 
@@ -25,7 +25,7 @@ describe('EditProductUseCase', () => {
       id: '1',
       category: new Category('Acompanhamento'),
     })
-    mockProductRepository.register(existingProduct)
+    mockProductRepository.create(existingProduct)
 
     const productToEdit = makeEditProductRequest({
       id: '1',
@@ -79,7 +79,7 @@ describe('EditProductUseCase', () => {
     'should throw an error if product data is invalid',
     async (invalidProduct, excMessage) => {
       const existingProduct = makeProduct()
-      mockProductRepository.register(existingProduct)
+      mockProductRepository.create(existingProduct)
 
       const result = await sut.execute(invalidProduct)
 

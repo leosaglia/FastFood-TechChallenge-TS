@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Product } from '@core/domain/entities/Product'
+import { Product } from '@core/domain/entities/product'
 import { PrismaService } from '@adapter/driven/prisma/prisma.service'
 import { PrismaProductMapper } from '@adapter/driven/mappers/prisma-product-mapper'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
@@ -8,7 +8,7 @@ import { ProductRepository } from '@core/aplication/repositories/product-reposit
 export default class PrismaProductRepository implements ProductRepository {
   constructor(private prisma: PrismaService) {}
 
-  async register(product: Product): Promise<void> {
+  async create(product: Product): Promise<void> {
     await this.prisma.product.create({
       data: {
         id: product.getId(),

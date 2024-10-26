@@ -1,4 +1,4 @@
-import { Document } from '@core/domain/valueObjects/Document'
+import { Document } from '@core/domain/valueObjects/document'
 import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 

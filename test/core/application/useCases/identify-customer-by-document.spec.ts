@@ -1,6 +1,6 @@
 import { IdentifyCustomerByDocumentUseCase } from '@core/aplication/useCases/identify-customer-by-document'
-import { Customer } from '@core/domain/entities/Customer'
-import { Document } from '@core/domain/valueObjects/Document'
+import { Customer } from '@core/domain/entities/customer'
+import { Document } from '@core/domain/valueObjects/document'
 import { InMemoryCustomerRepository } from '@adapter/driven/repositories/in-memory/in-memory-customer-repository'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
@@ -21,7 +21,7 @@ describe('IdentifyCustomerByDocument', () => {
       'john.doe@example.com',
       '1',
     )
-    mockCustomerRepository.register(customer)
+    mockCustomerRepository.create(customer)
 
     const result = await sut.execute('111.444.777-35')
     const identifiedCustomer = result.value as { customer: Customer }

@@ -1,4 +1,4 @@
-import { Customer } from '@core/domain/entities/Customer'
+import { Customer } from '@core/domain/entities/customer'
 
 export class CustomerPresenter {
   static present(customer: Customer) {

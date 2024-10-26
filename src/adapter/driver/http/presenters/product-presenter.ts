@@ -1,4 +1,4 @@
-import { Product } from '@core/domain/entities/Product'
+import { Product } from '@core/domain/entities/product'
 
 export class ProductPresenter {
   static present(product: Product) {

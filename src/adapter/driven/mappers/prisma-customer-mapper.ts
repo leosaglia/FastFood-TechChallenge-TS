@@ -1,5 +1,5 @@
-import { Customer } from '@core/domain/entities/Customer'
-import { Document } from '@core/domain/valueObjects/Document'
+import { Customer } from '@core/domain/entities/customer'
+import { Document } from '@core/domain/valueObjects/document'
 import { Customer as PrismaCustomer } from '@prisma/client'
 
 export class PrismaCustomerMapper {

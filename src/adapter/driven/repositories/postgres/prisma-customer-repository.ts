@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Customer } from '@core/domain/entities/Customer'
+import { Customer } from '@core/domain/entities/customer'
 import { PrismaService } from '@adapter/driven/prisma/prisma.service'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { PrismaCustomerMapper } from '@adapter/driven/mappers/prisma-customer-mapper'
@@ -8,7 +8,7 @@ import { PrismaCustomerMapper } from '@adapter/driven/mappers/prisma-customer-ma
 export default class PrismaCustomerRepository implements CustomerRepository {
   constructor(private prisma: PrismaService) {}
 
-  async register(customer: Customer): Promise<void> {
+  async create(customer: Customer): Promise<void> {
     await this.prisma.customer.create({
       data: {
         id: customer.getId(),

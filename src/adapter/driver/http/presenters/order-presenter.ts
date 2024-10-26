@@ -1,5 +1,5 @@
-import { Order } from '@core/domain/entities/Order'
-import { Product } from '@core/domain/entities/Product'
+import { Order } from '@core/domain/entities/order'
+import { Product } from '@core/domain/entities/product'
 
 interface OrderItemDTO {
   productId: string

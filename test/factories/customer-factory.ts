@@ -1,6 +1,6 @@
 import { RegisterCustomerUseCaseRequest } from '@core/aplication/dtos/request/register-customer-use-case-request'
-import { Customer } from '@core/domain/entities/Customer'
-import { Document } from '@core/domain/valueObjects/Document'
+import { Customer } from '@core/domain/entities/customer'
+import { Document } from '@core/domain/valueObjects/document'
 
 interface CustomerProps {
   id: string

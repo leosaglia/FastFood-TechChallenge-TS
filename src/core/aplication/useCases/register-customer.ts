@@ -1,5 +1,5 @@
-import { Customer } from '@core/domain/entities/Customer'
-import { Document } from '@core/domain/valueObjects/Document'
+import { Customer } from '@core/domain/entities/customer'
+import { Document } from '@core/domain/valueObjects/document'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { RegisterCustomerUseCaseRequest } from '@core/aplication/dtos/request/register-customer-use-case-request'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
@@ -35,7 +35,7 @@ export class RegisterCustomerUseCase {
         )
       }
 
-      this.customerRepository.register(customer)
+      this.customerRepository.create(customer)
 
       return success({ customer })
     } catch (error) {

@@ -3,7 +3,7 @@ import { ProductRepository } from '@core/aplication/repositories/product-reposit
 import { RegisterProductUseCase } from '@core/aplication/useCases/register-product'
 import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import { makeRegisterProductRequest } from '@test/factories/product-factory'
-import { Product } from '@core/domain/entities/Product'
+import { Product } from '@core/domain/entities/product'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('RegisterProductUseCase', () => {

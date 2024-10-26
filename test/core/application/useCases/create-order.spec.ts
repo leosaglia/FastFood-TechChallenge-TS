@@ -1,7 +1,7 @@
 import { OrderStatus } from '@core/domain/enums/order-status'
 import { CreateOrderUseCase } from '@core/aplication/useCases/create-order'
-import { Order } from '@core/domain/entities/Order'
-import { Product } from '@core/domain/entities/Product'
+import { Order } from '@core/domain/entities/order'
+import { Product } from '@core/domain/entities/product'
 import { OrderRepository } from '@core/aplication/repositories/order-repository'
 import { InMemoryOrderRepository } from '@adapter/driven/repositories/in-memory/in-memory-order-repository'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
@@ -31,8 +31,8 @@ describe('CreateOrderUseCase', () => {
   })
 
   it('should create a new order with products', async () => {
-    mockProductRepository.register(makeProduct({ id: '1' }))
-    mockProductRepository.register(makeProduct({ id: '2' }))
+    mockProductRepository.create(makeProduct({ id: '1' }))
+    mockProductRepository.create(makeProduct({ id: '2' }))
     const result = await sut.execute({
       items: [
         {
@@ -73,8 +73,8 @@ describe('CreateOrderUseCase', () => {
   })
 
   it('should create a new order with customer', async () => {
-    mockProductRepository.register(makeProduct({ id: '1' }))
-    mockCustomerRepository.register(makeCustomer({ id: '1' }))
+    mockProductRepository.create(makeProduct({ id: '1' }))
+    mockCustomerRepository.create(makeCustomer({ id: '1' }))
     const result = await sut.execute({
       items: [
         {
@@ -92,7 +92,7 @@ describe('CreateOrderUseCase', () => {
   })
 
   it('should agrupe products when duplicated in same order', async () => {
-    mockProductRepository.register(makeProduct({ id: '1' }))
+    mockProductRepository.create(makeProduct({ id: '1' }))
     const result = await sut.execute({
       items: [
         {
@@ -142,7 +142,7 @@ describe('CreateOrderUseCase', () => {
   })
 
   it('should return an error when a customer is not found', async () => {
-    mockProductRepository.register(makeProduct({ id: '1' }))
+    mockProductRepository.create(makeProduct({ id: '1' }))
     const result = await sut.execute({
       items: [
         {

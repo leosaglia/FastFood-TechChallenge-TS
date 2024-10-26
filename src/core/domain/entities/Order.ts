@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js'
 
-import { OrderItem } from './OrderItem'
+import { OrderItem } from './orderItem'
 import { OrderStatus } from '../enums/order-status'
 import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 

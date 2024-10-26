@@ -1,5 +1,5 @@
-import { Product } from '@core/domain/entities/Product'
-import { Category } from '@core/domain/valueObjects/Category'
+import { Product } from '@core/domain/entities/product'
+import { Category } from '@core/domain/valueObjects/category'
 import { Product as PrismaProduct } from '@prisma/client'
 
 export class PrismaProductMapper {

@@ -15,7 +15,7 @@ describe('DeleteProductUseCase', () => {
   it('should delete a product successfully', async () => {
     const productId = '123'
     const existingProduct = makeProduct({ id: productId })
-    mockProductRepository.register(existingProduct)
+    mockProductRepository.create(existingProduct)
 
     const result = await sut.execute(productId)
 

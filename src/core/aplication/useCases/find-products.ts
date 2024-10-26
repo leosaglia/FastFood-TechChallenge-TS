@@ -1,5 +1,5 @@
-import { Product } from '@core/domain/entities/Product'
-import { Category } from '@core/domain/valueObjects/Category'
+import { Product } from '@core/domain/entities/product'
+import { Category } from '@core/domain/valueObjects/category'
 import { ProductRepository } from '../repositories/product-repository'
 import { Either, failure, success } from '@core/error-handling/either'
 import { BadRequestError } from '@core/error-handling/bad-request-error'

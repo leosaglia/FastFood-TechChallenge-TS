@@ -1,6 +1,6 @@
 import { Decimal } from 'decimal.js'
 
-import { Category } from '@core/domain/valueObjects/Category'
+import { Category } from '@core/domain/valueObjects/category'
 import { UniqueEntityId } from '../valueObjects/unique-entity-id'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 

@@ -1,8 +1,8 @@
-import { Category } from '@core/domain/valueObjects/Category'
+import { Category } from '@core/domain/valueObjects/category'
 import { FindProductsUseCase } from '@core/aplication/useCases/find-products'
 import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import { makeProduct } from '@test/factories/product-factory'
-import { Product } from '@core/domain/entities/Product'
+import { Product } from '@core/domain/entities/product'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('FindProductByCategoryUseCase', () => {
@@ -29,9 +29,9 @@ describe('FindProductByCategoryUseCase', () => {
       name: 'Product 3',
       category: new Category('Lanche'),
     })
-    mockProductRepository.register(product1)
-    mockProductRepository.register(product2)
-    mockProductRepository.register(product3)
+    mockProductRepository.create(product1)
+    mockProductRepository.create(product2)
+    mockProductRepository.create(product3)
 
     const result = await sut.execute({ category: 'Acompanhamento' })
 
@@ -58,9 +58,9 @@ describe('FindProductByCategoryUseCase', () => {
       name: 'Product 3',
       category: new Category('Lanche'),
     })
-    mockProductRepository.register(product1)
-    mockProductRepository.register(product2)
-    mockProductRepository.register(product3)
+    mockProductRepository.create(product1)
+    mockProductRepository.create(product2)
+    mockProductRepository.create(product3)
 
     const result = await sut.execute({})
 

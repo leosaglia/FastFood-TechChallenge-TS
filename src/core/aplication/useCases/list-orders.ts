@@ -3,8 +3,8 @@ import { OrderRepository } from '../repositories/order-repository'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 import { Either, failure, success } from '@core/error-handling/either'
-import { Product } from '@core/domain/entities/Product'
-import { Order } from '@core/domain/entities/Order'
+import { Product } from '@core/domain/entities/product'
+import { Order } from '@core/domain/entities/order'
 
 type ListOrderUseCaseResponse = Either<
   NoMappedError | ResourceNotFoundError,
@@ -24,7 +24,7 @@ export class ListOrderUseCase {
 
   async execute(): Promise<ListOrderUseCaseResponse> {
     try {
-      const orders = await this.orderRepository.list()
+      const orders = await this.orderRepository.findMany()
       const ordersWithItemsAndProducts: {
         order: Order
         products: Product[]

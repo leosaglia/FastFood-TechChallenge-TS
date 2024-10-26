@@ -1,6 +1,6 @@
-import { Order } from '@core/domain/entities/Order'
-import { Product } from '@core/domain/entities/Product'
-import { OrderItem } from '@core/domain/entities/OrderItem'
+import { Order } from '@core/domain/entities/order'
+import { Product } from '@core/domain/entities/product'
+import { OrderItem } from '@core/domain/entities/orderItem'
 import { OrderRepository } from '../repositories/order-repository'
 import { ProductRepository } from '../repositories/product-repository'
 import { CustomerRepository } from '../repositories/customer-repository'
@@ -67,7 +67,7 @@ export class CreateOrderUseCase {
         order.addItem(orderItem)
       }
 
-      await this.orderRepository.register(order)
+      await this.orderRepository.create(order)
 
       return success({ order, products })
     } catch (error) {

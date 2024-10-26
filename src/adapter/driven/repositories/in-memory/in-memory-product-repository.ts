@@ -1,10 +1,10 @@
-import { Product } from '@core/domain/entities/Product'
+import { Product } from '@core/domain/entities/product'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
 
 export class InMemoryProductRepository implements ProductRepository {
   private products: Product[] = []
 
-  async register(product: Product): Promise<void> {
+  async create(product: Product): Promise<void> {
     this.products.push(product)
   }
 

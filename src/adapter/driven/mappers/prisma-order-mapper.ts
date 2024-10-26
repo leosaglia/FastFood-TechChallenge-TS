@@ -1,5 +1,5 @@
-import { Order } from '@core/domain/entities/Order'
-import { OrderItem } from '@core/domain/entities/OrderItem'
+import { Order } from '@core/domain/entities/order'
+import { OrderItem } from '@core/domain/entities/orderItem'
 import { OrderStatus } from '@core/domain/enums/order-status'
 import {
   Order as PrismaOrder,
