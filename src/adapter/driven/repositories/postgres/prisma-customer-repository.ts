@@ -9,13 +9,10 @@ export default class PrismaCustomerRepository implements CustomerRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(customer: Customer): Promise<void> {
+    const data = PrismaCustomerMapper.toPersistence(customer)
+
     await this.prisma.customer.create({
-      data: {
-        id: customer.getId(),
-        name: customer.getName(),
-        email: customer.getEmail(),
-        document: customer.getDocument(),
-      },
+      data,
     })
   }
 

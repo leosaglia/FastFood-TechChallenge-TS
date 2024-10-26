@@ -9,26 +9,19 @@ export default class PrismaProductRepository implements ProductRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(product: Product): Promise<void> {
+    const data = PrismaProductMapper.toPersistence(product)
+
     await this.prisma.product.create({
-      data: {
-        id: product.getId(),
-        name: product.getName(),
-        description: product.getDescription(),
-        price: product.getPrice(),
-        category: product.getCategory(),
-      },
+      data,
     })
   }
 
   async edit(product: Product): Promise<void> {
+    const data = PrismaProductMapper.toPersistenceUpdate(product)
+
     await this.prisma.product.update({
       where: { id: product.getId() },
-      data: {
-        name: product.getName(),
-        description: product.getDescription(),
-        price: product.getPrice(),
-        category: product.getCategory(),
-      },
+      data,
     })
   }
 
