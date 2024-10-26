@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+import { z } from 'zod'
 import {
   BadRequestException,
   Body,
@@ -8,13 +10,15 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common'
-import { z } from 'zod'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { OrderPresenter } from '../presenters/order-presenter'
-import { NestCreateOrderUseCase } from '../nest/use-cases/nest-create-order'
+import { ErrorResponse } from '../presenters/error-response'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
+import { NestCreateOrderUseCase } from '../nest/use-cases/nest-create-order'
 import { NestFindOrdersUseCase } from '../nest/use-cases/nest-find-orders'
+import { CreateOrderDto } from '../DTOs/create-order.dto'
 
 const createOrderSchema = z.object({
   items: z.array(
@@ -26,8 +30,7 @@ const createOrderSchema = z.object({
   customerId: z.string().optional(),
 })
 
-type CreateOrderDto = z.infer<typeof createOrderSchema>
-
+@ApiTags('orders')
 @Controller('orders')
 export class OrderController {
   constructor(
@@ -36,6 +39,11 @@ export class OrderController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create an order' })
+  @ApiResponse({ status: 201, description: 'Order created', type: OrderPresenter })
+  @ApiResponse({ status: 400, description: 'Invalid data', type: ErrorResponse })
+  @ApiResponse({ status: 404, description: 'Product or Customer not found', type: ErrorResponse })
+  @ApiResponse({ status: 500, description: 'Internal server error', type: ErrorResponse })
   @UsePipes(new ZodValidationPipe(createOrderSchema))
   async createOrder(@Body() body: CreateOrderDto) {
     const { items, customerId } = body
@@ -53,6 +61,10 @@ export class OrderController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'List all orders' })
+  @ApiResponse({ status: 200, type: OrderPresenter, isArray: true })
+  @ApiResponse({ status: 404, description: 'Product not found', type: ErrorResponse })
+  @ApiResponse({ status: 500, description: 'Internal server error', type: ErrorResponse })
   async listOrders() {
     const result = await this.listOrderUseCase.execute()
 

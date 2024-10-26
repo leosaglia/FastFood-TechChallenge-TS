@@ -1,48 +1,101 @@
 import { Order } from '@core/domain/entities/order'
 import { Product } from '@core/domain/entities/product'
+import { ApiProperty } from '@nestjs/swagger'
 
-interface OrderItemDTO {
-  productId: string
-  name?: string
-  price?: string
-  category?: string
-  quantity: number
-  total: string
-}
+class OrderItemPresenter {
+  @ApiProperty({ example: '1a442d43-fad4-47ad-91ce-485346ad5a05' })
+  private readonly productId: string
 
-interface OrderDTO {
-  id: string
-  status: string
-  items: OrderItemDTO[]
-  customerId?: string
-  createdAt: string
-  total: string
+  @ApiProperty({ example: 'Burguer Bacon' })
+  private readonly name?: string
+
+  @ApiProperty({ example: '10.00' })
+  private readonly price?: string
+
+  @ApiProperty({ example: 'Lanche' })
+  private readonly category?: string
+
+  @ApiProperty({ example: 2 })
+  private readonly quantity: number
+
+  @ApiProperty({ example: '20.00' })
+  private readonly total: string
+
+  constructor(
+    productId: string,
+    quantity: number,
+    total: string,
+    name?: string,
+    price?: string,
+    category?: string,
+  ) {
+    this.productId = productId
+    this.name = name
+    this.price = price
+    this.category = category
+    this.quantity = quantity
+    this.total = total
+  }
 }
 
 export class OrderPresenter {
-  static present(order: Order, products: Product[]): OrderDTO {
+  @ApiProperty({ example: '1a442d43-fad4-47ad-91ce-485346ad5a05' })
+  private readonly id: string
+
+  @ApiProperty({ example: '1a442d43-fad4-47ad-91ce-485346ad5a05' })
+  private readonly customerId?: string
+
+  @ApiProperty({ example: 'criado' })
+  private readonly status: string
+
+  @ApiProperty({ example: '10.00' })
+  private readonly total: string
+
+  @ApiProperty({ example: '2021-06-01T00:00:00Z' })
+  private readonly createdAt: string
+
+  @ApiProperty({ type: [OrderItemPresenter] })
+  private readonly items: OrderItemPresenter[]
+
+  constructor(
+    id: string,
+    status: string,
+    total: string,
+    createdAt: string,
+    items: OrderItemPresenter[],
+    customerId?: string,
+  ) {
+    this.id = id
+    this.customerId = customerId
+    this.status = status
+    this.total = total
+    this.createdAt = createdAt
+    this.items = items
+  }
+
+  static present(order: Order, products: Product[]): OrderPresenter {
     const orderItems = order.getItems().map((item) => {
       const product = products.find(
         (product) => product.getId() === item.getProductId(),
       )
 
-      return {
-        productId: item.getProductId(),
-        name: product?.getName(),
-        price: product?.getPrice().toFixed(2),
-        category: product?.getCategory(),
-        quantity: item.getQuantity(),
-        total: item.getTotal().toFixed(2),
-      }
+      return new OrderItemPresenter(
+        item.getProductId(),
+        item.getQuantity(),
+        item.getTotal().toFixed(2),
+        product?.getName(),
+        product?.getPrice().toFixed(2),
+        product?.getCategory(),
+      )
     })
 
-    return {
-      id: order.getId(),
-      customerId: order.getCustomerId(),
-      status: order.getStatus(),
-      items: orderItems,
-      total: order.getTotal().toFixed(2),
-      createdAt: order.getCreatedAt().toISOString(),
-    }
+    return new OrderPresenter(
+      order.getId(),
+      order.getStatus(),
+      order.getTotal().toFixed(2),
+      order.getCreatedAt().toISOString(),
+      orderItems,
+      order.getCustomerId(),
+    )
   }
 }
