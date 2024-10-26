@@ -23,7 +23,7 @@ import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-e
 import { NestEditProductUseCase } from '../nest/use-cases/nest-edit-product'
 import { NestFindProductsUseCase } from '../nest/use-cases/nest-find-products'
 import { NestDeleteProductUseCase } from '../nest/use-cases/nest-delete-product'
-import { NestRegisterProductUseCase } from '../nest/use-cases/nest-register-product'
+import { NestCreateProductUseCase } from '../nest/use-cases/nest-create-product'
 
 const createProductSchema = z.object({
   name: z.string(),
@@ -49,7 +49,7 @@ type UpdateProductDto = z.infer<typeof updateProductSchema>
 @Controller('products')
 export class ProductController {
   constructor(
-    private readonly registerProductUseCase: NestRegisterProductUseCase,
+    private readonly registerProductUseCase: NestCreateProductUseCase,
     private readonly editProductUseCase: NestEditProductUseCase,
     private readonly findProductsUseCase: NestFindProductsUseCase,
     private readonly deleteProductUseCase: NestDeleteProductUseCase,

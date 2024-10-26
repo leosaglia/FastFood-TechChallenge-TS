@@ -1,5 +1,5 @@
 import { Document } from '@core/domain/valueObjects/document'
-import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-customer'
+import { CreateCustomerUseCase } from '@core/aplication/useCases/create-customer'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
 import { InMemoryCustomerRepository } from '@adapter/driven/repositories/in-memory/in-memory-customer-repository'
 import { makeRegisterCustomerRequest } from '@test/factories/customer-factory'
@@ -8,15 +8,15 @@ import { ResourceAlreadyExistsError } from '@core/error-handling/resource-alread
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('RegisterCustomer', () => {
-  let sut: RegisterCustomerUseCase
+  let sut: CreateCustomerUseCase
   let customerRepository: CustomerRepository
 
   beforeEach(() => {
     customerRepository = new InMemoryCustomerRepository()
-    sut = new RegisterCustomerUseCase(customerRepository)
+    sut = new CreateCustomerUseCase(customerRepository)
   })
 
-  it('should register a new customer', async () => {
+  it('should create a new customer', async () => {
     const customer = makeRegisterCustomerRequest()
 
     const result = await sut.execute(customer)

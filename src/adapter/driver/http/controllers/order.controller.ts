@@ -14,7 +14,7 @@ import { OrderPresenter } from '../presenters/order-presenter'
 import { NestCreateOrderUseCase } from '../nest/use-cases/nest-create-order'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
-import { NestListOrderUseCase } from '../nest/use-cases/nest-list-orders'
+import { NestFindOrdersUseCase } from '../nest/use-cases/nest-find-orders'
 
 const createOrderSchema = z.object({
   items: z.array(
@@ -32,7 +32,7 @@ type CreateOrderDto = z.infer<typeof createOrderSchema>
 export class OrderController {
   constructor(
     private readonly createOrderUseCase: NestCreateOrderUseCase,
-    private readonly listOrderUseCase: NestListOrderUseCase,
+    private readonly listOrderUseCase: NestFindOrdersUseCase,
   ) {}
 
   @Post()

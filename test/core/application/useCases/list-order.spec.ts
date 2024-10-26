@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js'
 import { Order } from '@core/domain/entities/order'
 import { OrderItem } from '@core/domain/entities/orderItem'
-import { ListOrderUseCase } from '@core/aplication/useCases/list-orders'
+import { FindOrdersUseCase } from '@core/aplication/useCases/find-orders'
 import { InMemoryOrderRepository } from '@adapter/driven/repositories/in-memory/in-memory-order-repository'
 import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import { makeProduct } from '@test/factories/product-factory'
@@ -9,15 +9,15 @@ import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-e
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 import { Product } from '@core/domain/entities/product'
 
-describe('ListOrderUseCase', () => {
+describe('FindOrdersUseCase', () => {
   let orderRepository: InMemoryOrderRepository
   let productRepository: InMemoryProductRepository
-  let listOrderUseCase: ListOrderUseCase
+  let listOrderUseCase: FindOrdersUseCase
 
   beforeEach(() => {
     orderRepository = new InMemoryOrderRepository()
     productRepository = new InMemoryProductRepository()
-    listOrderUseCase = new ListOrderUseCase(orderRepository, productRepository)
+    listOrderUseCase = new FindOrdersUseCase(orderRepository, productRepository)
   })
 
   it('should list orders with items and product details', async () => {

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common'
 import { z } from 'zod'
 import { CustomerPresenter } from '../presenters/customer-presenter'
-import { NestRegisterCustomerUseCase } from '../nest/use-cases/nest-register-customer'
+import { NestCreateCustomerUseCase } from '../nest/use-cases/nest-create-customer'
 import { NestIdentifyCustomerByDocumentUseCase } from '../nest/use-cases/nest-identify-customer-by-document'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
@@ -27,7 +27,7 @@ type CreateCustomertDto = z.infer<typeof createCustomertSchema>
 @Controller('customers')
 export class CustomerController {
   constructor(
-    private readonly registerCustomerUseCase: NestRegisterCustomerUseCase,
+    private readonly registerCustomerUseCase: NestCreateCustomerUseCase,
     private readonly identifyCustomerByDocumentUseCase: NestIdentifyCustomerByDocumentUseCase,
   ) {}
 

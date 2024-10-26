@@ -3,7 +3,7 @@ import { Decimal } from 'decimal.js'
 import { Product } from '@core/domain/entities/product'
 import { Category } from '@core/domain/valueObjects/category'
 import { EditProductUseCaseRequest } from '@core/aplication/dtos/request/edit-product-use-case-request'
-import { RegisterProductUseCaseRequest } from '@core/aplication/dtos/request/register-product-use-case-request'
+import { CreateProductUseCaseRequest } from '@core/aplication/dtos/request/create-product-use-case-request'
 
 interface ProductProps {
   id: string
@@ -24,8 +24,8 @@ export function makeProduct({
 }
 
 export function makeRegisterProductRequest(
-  override: Partial<RegisterProductUseCaseRequest> = {},
-): RegisterProductUseCaseRequest {
+  override: Partial<CreateProductUseCaseRequest> = {},
+): CreateProductUseCaseRequest {
   return {
     name: 'Duplo Cheddar',
     price: new Decimal(100),

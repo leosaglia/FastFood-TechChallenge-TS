@@ -6,7 +6,7 @@ import { Either, failure, success } from '@core/error-handling/either'
 import { Product } from '@core/domain/entities/product'
 import { Order } from '@core/domain/entities/order'
 
-type ListOrderUseCaseResponse = Either<
+type FindOrdersUseCaseResponse = Either<
   NoMappedError | ResourceNotFoundError,
   {
     orders: Array<{
@@ -16,13 +16,13 @@ type ListOrderUseCaseResponse = Either<
   }
 >
 
-export class ListOrderUseCase {
+export class FindOrdersUseCase {
   constructor(
     private orderRepository: OrderRepository,
     private productRepository: ProductRepository,
   ) {}
 
-  async execute(): Promise<ListOrderUseCaseResponse> {
+  async execute(): Promise<FindOrdersUseCaseResponse> {
     try {
       const orders = await this.orderRepository.findMany()
       const ordersWithItemsAndProducts: {

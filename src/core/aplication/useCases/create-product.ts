@@ -3,19 +3,19 @@ import { Decimal } from 'decimal.js'
 import { Product } from '@core/domain/entities/product'
 import { Category } from '@core/domain/valueObjects/category'
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
-import { RegisterProductUseCaseRequest } from '../dtos/request/register-product-use-case-request'
+import { CreateProductUseCaseRequest } from '../dtos/request/create-product-use-case-request'
 import { Either, success, failure } from '@core/error-handling/either'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 
-type RegisterProductUseCaseResponse = Either<
+type CreateProductUseCaseResponse = Either<
   NoMappedError | BadRequestError,
   {
     product: Product
   }
 >
 
-export class RegisterProductUseCase {
+export class CreateProductUseCase {
   constructor(private productRepository: ProductRepository) {}
 
   async execute({
@@ -23,7 +23,7 @@ export class RegisterProductUseCase {
     price,
     description,
     category,
-  }: RegisterProductUseCaseRequest): Promise<RegisterProductUseCaseResponse> {
+  }: CreateProductUseCaseRequest): Promise<CreateProductUseCaseResponse> {
     try {
       const product = new Product(
         name,

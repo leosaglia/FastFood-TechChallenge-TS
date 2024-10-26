@@ -1,27 +1,27 @@
 import { Customer } from '@core/domain/entities/customer'
 import { Document } from '@core/domain/valueObjects/document'
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
-import { RegisterCustomerUseCaseRequest } from '@core/aplication/dtos/request/register-customer-use-case-request'
+import { CreateCustomerUseCaseRequest } from '@core/aplication/dtos/request/create-customer-use-case-request'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 import { Either, failure, success } from '@core/error-handling/either'
 import { ResourceAlreadyExistsError } from '@core/error-handling/resource-already-exists-error'
 
-type RegisterCustomerUseCaseResponse = Either<
+type CreateCustomerUseCaseResponse = Either<
   NoMappedError | BadRequestError | ResourceAlreadyExistsError,
   {
     customer: Customer
   }
 >
 
-export class RegisterCustomerUseCase {
+export class CreateCustomerUseCase {
   constructor(private customerRepository: CustomerRepository) {}
 
   async execute({
     document,
     name,
     email,
-  }: RegisterCustomerUseCaseRequest): Promise<RegisterCustomerUseCaseResponse> {
+  }: CreateCustomerUseCaseRequest): Promise<CreateCustomerUseCaseResponse> {
     try {
       const customer = new Customer(name, new Document(document), email)
 

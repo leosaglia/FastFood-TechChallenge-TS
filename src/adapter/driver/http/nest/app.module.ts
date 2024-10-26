@@ -4,26 +4,26 @@ import { CustomerController } from '../controllers/customer.controller'
 import { OrderController } from '../controllers/order.controller'
 import { DatabaseModule } from '@adapter/driven/database.module'
 import { NestIdentifyCustomerByDocumentUseCase } from './use-cases/nest-identify-customer-by-document'
-import { NestRegisterCustomerUseCase } from './use-cases/nest-register-customer'
-import { NestRegisterProductUseCase } from './use-cases/nest-register-product'
+import { NestCreateCustomerUseCase } from './use-cases/nest-create-customer'
+import { NestCreateProductUseCase } from './use-cases/nest-create-product'
 import { NestEditProductUseCase } from './use-cases/nest-edit-product'
 import { NestDeleteProductUseCase } from './use-cases/nest-delete-product'
 import { NestFindProductsUseCase } from './use-cases/nest-find-products'
 import { NestCreateOrderUseCase } from './use-cases/nest-create-order'
-import { NestListOrderUseCase } from './use-cases/nest-list-orders'
+import { NestFindOrdersUseCase } from './use-cases/nest-find-orders'
 
 @Module({
   imports: [DatabaseModule],
   controllers: [ProductController, CustomerController, OrderController],
   providers: [
     NestIdentifyCustomerByDocumentUseCase,
-    NestRegisterCustomerUseCase,
-    NestRegisterProductUseCase,
+    NestCreateCustomerUseCase,
+    NestCreateProductUseCase,
     NestEditProductUseCase,
     NestDeleteProductUseCase,
     NestFindProductsUseCase,
     NestCreateOrderUseCase,
-    NestListOrderUseCase,
+    NestFindOrdersUseCase,
   ],
 })
 export class AppModule {}

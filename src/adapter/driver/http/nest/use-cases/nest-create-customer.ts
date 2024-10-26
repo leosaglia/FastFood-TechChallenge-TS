@@ -1,9 +1,9 @@
 import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
-import { RegisterCustomerUseCase } from '@core/aplication/useCases/register-customer'
+import { CreateCustomerUseCase } from '@core/aplication/useCases/create-customer'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
-export class NestRegisterCustomerUseCase extends RegisterCustomerUseCase {
+export class NestCreateCustomerUseCase extends CreateCustomerUseCase {
   constructor(customerRepository: CustomerRepository) {
     super(customerRepository)
   }

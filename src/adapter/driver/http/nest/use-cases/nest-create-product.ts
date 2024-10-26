@@ -1,9 +1,9 @@
 import { ProductRepository } from '@core/aplication/repositories/product-repository'
-import { RegisterProductUseCase } from '@core/aplication/useCases/register-product'
+import { CreateProductUseCase } from '@core/aplication/useCases/create-product'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
-export class NestRegisterProductUseCase extends RegisterProductUseCase {
+export class NestCreateProductUseCase extends CreateProductUseCase {
   constructor(productRepository: ProductRepository) {
     super(productRepository)
   }

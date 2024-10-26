@@ -1,4 +1,4 @@
-import { RegisterCustomerUseCaseRequest } from '@core/aplication/dtos/request/register-customer-use-case-request'
+import { CreateCustomerUseCaseRequest } from '@core/aplication/dtos/request/create-customer-use-case-request'
 import { Customer } from '@core/domain/entities/customer'
 import { Document } from '@core/domain/valueObjects/document'
 
@@ -10,8 +10,8 @@ interface CustomerProps {
 }
 
 export function makeRegisterCustomerRequest(
-  override: Partial<RegisterCustomerUseCaseRequest> = {},
-): RegisterCustomerUseCaseRequest {
+  override: Partial<CreateCustomerUseCaseRequest> = {},
+): CreateCustomerUseCaseRequest {
   return {
     name: 'John Doe',
     document: '111.444.777-35',
