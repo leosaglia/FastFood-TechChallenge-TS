@@ -1,8 +1,7 @@
-version: '3.8'
 services:
   postgres:
     image: postgres
-    container_name: pg-fastfood
+    container_name: fastfood-pg
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgrespass
@@ -12,3 +11,12 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres-data:/data/datapostgres
+  backend:
+    build: .
+    container_name: fastfood-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    env_file:
+      - .env.production
