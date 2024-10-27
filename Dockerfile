@@ -36,11 +36,11 @@ WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/package*.json ./
-COPY --from=build /usr/src/app/.env.production ./
+COPY --from=build /usr/src/app/.env ./
 COPY --from=build /usr/src/app/src/adapter/driven/prisma ./src/adapter/driven/prisma
 
 # Expor a porta que a aplicação irá rodar
-EXPOSE 3000
+EXPOSE ${PORT}
 
 # Comando para iniciar a aplicação
 CMD [ "npm", "run", "start:migrate:prod" ]

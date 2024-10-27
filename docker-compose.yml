@@ -6,26 +6,26 @@ services:
     image: postgres
     container_name: fastfood-pg
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgrespass
-      POSTGRES_DB: techchallenge-fastfood
-      PGDATA: /data/datapostgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: ${PGDATA}
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 15
     ports:
       - "5432:5432"
     volumes:
-      - postgres-data:/data/datapostgres
+      - postgres-data:${PGDATA}
   backend:
     build: .
     container_name: fastfood-api
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     depends_on:
       postgres:
         condition: service_healthy
     env_file:
-      - .env.production
+      - .env
