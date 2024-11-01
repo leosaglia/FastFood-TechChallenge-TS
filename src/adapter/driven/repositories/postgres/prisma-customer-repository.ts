@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Customer } from '@core/domain/entities/customer'
 import { PrismaService } from '@adapter/driven/prisma/prisma.service'
-import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { CustomerRepository } from '@core/aplication/ports/repositories/customer-repository'
 import { PrismaCustomerMapper } from '@adapter/driven/mappers/prisma-customer-mapper'
 
 @Injectable()

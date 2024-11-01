@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PaymentPort } from '@core/aplication/ports/payment-port'
-import { OrderRepository } from '@core/aplication/repositories/order-repository'
+import { OrderRepository } from '@core/aplication/ports/repositories/order-repository'
 import { MakeOrderPaymentUseCase } from '@core/aplication/useCases/make-order-payment'
 
 @Injectable()

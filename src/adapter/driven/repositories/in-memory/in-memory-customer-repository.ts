@@ -1,5 +1,5 @@
 import { Customer } from '@core/domain/entities/customer'
-import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { CustomerRepository } from '@core/aplication/ports/repositories/customer-repository'
 
 export class InMemoryCustomerRepository implements CustomerRepository {
   private customers: Customer[] = []

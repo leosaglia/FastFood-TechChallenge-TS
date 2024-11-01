@@ -1,4 +1,4 @@
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 import { Either, failure, success } from '@core/error-handling/either'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 

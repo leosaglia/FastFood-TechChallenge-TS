@@ -1,6 +1,6 @@
-import { OrderRepository } from '@core/aplication/repositories/order-repository'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
-import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { OrderRepository } from '@core/aplication/ports/repositories/order-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
+import { CustomerRepository } from '@core/aplication/ports/repositories/customer-repository'
 import { CreateOrderUseCase } from '@core/aplication/useCases/create-order'
 import { Injectable } from '@nestjs/common'
 

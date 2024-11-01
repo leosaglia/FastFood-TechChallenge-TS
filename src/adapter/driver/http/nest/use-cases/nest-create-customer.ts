@@ -1,4 +1,4 @@
-import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { CustomerRepository } from '@core/aplication/ports/repositories/customer-repository'
 import { CreateCustomerUseCase } from '@core/aplication/useCases/create-customer'
 import { Injectable } from '@nestjs/common'
 

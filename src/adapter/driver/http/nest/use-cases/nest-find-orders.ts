@@ -1,5 +1,5 @@
-import { OrderRepository } from '@core/aplication/repositories/order-repository'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { OrderRepository } from '@core/aplication/ports/repositories/order-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 import { FindOrdersUseCase } from '@core/aplication/useCases/find-orders'
 import { Injectable } from '@nestjs/common'
 

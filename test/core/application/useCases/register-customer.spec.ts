@@ -1,6 +1,6 @@
 import { Document } from '@core/domain/valueObjects/document'
 import { CreateCustomerUseCase } from '@core/aplication/useCases/create-customer'
-import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { CustomerRepository } from '@core/aplication/ports/repositories/customer-repository'
 import { InMemoryCustomerRepository } from '@adapter/driven/repositories/in-memory/in-memory-customer-repository'
 import { makeCreateCustomerRequest } from '@test/factories/customer-factory'
 import { Customer } from '@core/domain/entities/customer'

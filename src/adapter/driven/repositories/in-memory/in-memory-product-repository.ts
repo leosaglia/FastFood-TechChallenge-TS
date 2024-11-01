@@ -1,5 +1,5 @@
 import { Product } from '@core/domain/entities/product'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 
 export class InMemoryProductRepository implements ProductRepository {
   private products: Product[] = []

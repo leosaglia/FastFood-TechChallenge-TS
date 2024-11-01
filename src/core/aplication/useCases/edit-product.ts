@@ -1,6 +1,6 @@
 import { Product } from '@core/domain/entities/product'
 import { Category } from '@core/domain/valueObjects/category'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 import { EditProductUseCaseRequest } from '../dtos/request/edit-product-use-case-request'
 import { Either, failure, success } from '@core/error-handling/either'
 import { BadRequestError } from '@core/error-handling/bad-request-error'

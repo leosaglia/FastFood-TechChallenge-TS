@@ -1,4 +1,4 @@
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 import { FindProductsUseCase } from '@core/aplication/useCases/find-products'
 import { Injectable } from '@nestjs/common'
 

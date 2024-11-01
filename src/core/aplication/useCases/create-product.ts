@@ -2,7 +2,7 @@ import { Decimal } from 'decimal.js'
 
 import { Product } from '@core/domain/entities/product'
 import { Category } from '@core/domain/valueObjects/category'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 import { CreateProductUseCaseRequest } from '../dtos/request/create-product-use-case-request'
 import { Either, success, failure } from '@core/error-handling/either'
 import { BadRequestError } from '@core/error-handling/bad-request-error'

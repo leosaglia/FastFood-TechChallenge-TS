@@ -1,4 +1,4 @@
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 import { DeleteProductUseCase } from '@core/aplication/useCases/delete-product'
 import { Injectable } from '@nestjs/common'
 

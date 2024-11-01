@@ -4,7 +4,7 @@ import { InMemoryOrderRepository } from '@adapter/driven/repositories/in-memory/
 import { MakeOrderPaymentUseCase } from '@core/aplication/useCases/make-order-payment'
 import { PaymentPort } from '@core/aplication/ports/payment-port'
 
-import { OrderRepository } from '@core/aplication/repositories/order-repository'
+import { OrderRepository } from '@core/aplication/ports/repositories/order-repository'
 import { Order } from '@core/domain/entities/order'
 import { OrderStatus } from '@core/domain/enums/order-status'
 import { ConflictError } from '@core/error-handling/conflict-error'

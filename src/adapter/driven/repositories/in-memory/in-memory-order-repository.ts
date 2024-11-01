@@ -1,5 +1,5 @@
 import { Order } from '@core/domain/entities/order'
-import { OrderRepository } from '@core/aplication/repositories/order-repository'
+import { OrderRepository } from '@core/aplication/ports/repositories/order-repository'
 import { OrderStatus } from '@core/domain/enums/order-status'
 
 export class InMemoryOrderRepository implements OrderRepository {

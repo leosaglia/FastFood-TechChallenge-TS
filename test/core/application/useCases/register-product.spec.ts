@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 import { CreateProductUseCase } from '@core/aplication/useCases/create-product'
 import { InMemoryProductRepository } from '@adapter/driven/repositories/in-memory/in-memory-product-repository'
 import { makeCreateProductRequest } from '@test/factories/product-factory'

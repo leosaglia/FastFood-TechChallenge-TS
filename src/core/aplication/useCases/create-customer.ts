@@ -1,6 +1,6 @@
 import { Customer } from '@core/domain/entities/customer'
 import { Document } from '@core/domain/valueObjects/document'
-import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { CustomerRepository } from '@core/aplication/ports/repositories/customer-repository'
 import { CreateCustomerUseCaseRequest } from '@core/aplication/dtos/request/create-customer-use-case-request'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'

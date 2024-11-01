@@ -1,6 +1,6 @@
 import { PrismaOrderMapper } from '@adapter/driven/mappers/prisma-order-mapper'
 import { PrismaService } from '@adapter/driven/prisma/prisma.service'
-import { OrderRepository } from '@core/aplication/repositories/order-repository'
+import { OrderRepository } from '@core/aplication/ports/repositories/order-repository'
 import { Order } from '@core/domain/entities/order'
 import { OrderStatus } from '@core/domain/enums/order-status'
 import { Injectable } from '@nestjs/common'

@@ -1,4 +1,4 @@
-import { OrderRepository } from '../repositories/order-repository'
+import { OrderRepository } from '../ports/repositories/order-repository'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 import { Either, failure, success } from '@core/error-handling/either'

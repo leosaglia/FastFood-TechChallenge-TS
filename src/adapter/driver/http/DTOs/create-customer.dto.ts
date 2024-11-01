@@ -6,7 +6,7 @@ export class CreateCustomerDto {
 
   @ApiProperty({
     description: 'Document of the customer',
-    example: '12345678900',
+    example: '03150794013',
   })
   document!: string
 

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { Product } from '@core/domain/entities/product'
 import { PrismaService } from '@adapter/driven/prisma/prisma.service'
 import { PrismaProductMapper } from '@adapter/driven/mappers/prisma-product-mapper'
-import { ProductRepository } from '@core/aplication/repositories/product-repository'
+import { ProductRepository } from '@core/aplication/ports/repositories/product-repository'
 
 @Injectable()
 export default class PrismaProductRepository implements ProductRepository {

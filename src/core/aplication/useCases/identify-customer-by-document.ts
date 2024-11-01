@@ -1,6 +1,6 @@
 import { Customer } from '@core/domain/entities/customer'
 import { Document } from '@core/domain/valueObjects/document'
-import { CustomerRepository } from '@core/aplication/repositories/customer-repository'
+import { CustomerRepository } from '@core/aplication/ports/repositories/customer-repository'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
