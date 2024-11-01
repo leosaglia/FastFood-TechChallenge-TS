@@ -5,10 +5,10 @@ import { CreateCustomerUseCaseRequest } from '@core/aplication/dtos/request/crea
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { NoMappedError } from '@core/error-handling/no-mapped-error'
 import { Either, failure, success } from '@core/error-handling/either'
-import { ResourceAlreadyExistsError } from '@core/error-handling/resource-already-exists-error'
+import { ConflictError } from '@core/error-handling/conflict-error'
 
 type CreateCustomerUseCaseResponse = Either<
-  NoMappedError | BadRequestError | ResourceAlreadyExistsError,
+  NoMappedError | BadRequestError | ConflictError,
   {
     customer: Customer
   }
@@ -30,9 +30,7 @@ export class CreateCustomerUseCase {
       )
 
       if (customerFound) {
-        return failure(
-          new ResourceAlreadyExistsError('Customer already exists.'),
-        )
+        return failure(new ConflictError('Customer already exists.'))
       }
 
       this.customerRepository.create(customer)

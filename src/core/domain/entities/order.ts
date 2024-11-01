@@ -80,6 +80,10 @@ export class Order {
     return this.status
   }
 
+  setStatus(status: OrderStatus): void {
+    this.status = status
+  }
+
   setCustomerId(customerId: string): void {
     this.customerId = new UniqueEntityId(customerId)
   }

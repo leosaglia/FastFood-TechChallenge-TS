@@ -11,9 +11,11 @@ import { NestDeleteProductUseCase } from './use-cases/nest-delete-product'
 import { NestFindProductsUseCase } from './use-cases/nest-find-products'
 import { NestCreateOrderUseCase } from './use-cases/nest-create-order'
 import { NestFindOrdersUseCase } from './use-cases/nest-find-orders'
+import { NestMakeOrderPaymentUseCase } from './use-cases/nest-make-order-payment'
+import { ExternalServiceModule } from '@adapter/driven/external-service.module'
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, ExternalServiceModule],
   controllers: [ProductController, CustomerController, OrderController],
   providers: [
     NestIdentifyCustomerByDocumentUseCase,
@@ -24,6 +26,7 @@ import { NestFindOrdersUseCase } from './use-cases/nest-find-orders'
     NestFindProductsUseCase,
     NestCreateOrderUseCase,
     NestFindOrdersUseCase,
+    NestMakeOrderPaymentUseCase,
   ],
 })
 export class AppModule {}

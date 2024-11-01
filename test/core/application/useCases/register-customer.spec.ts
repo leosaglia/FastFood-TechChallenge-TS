@@ -4,7 +4,7 @@ import { CustomerRepository } from '@core/aplication/repositories/customer-repos
 import { InMemoryCustomerRepository } from '@adapter/driven/repositories/in-memory/in-memory-customer-repository'
 import { makeCreateCustomerRequest } from '@test/factories/customer-factory'
 import { Customer } from '@core/domain/entities/customer'
-import { ResourceAlreadyExistsError } from '@core/error-handling/resource-already-exists-error'
+import { ConflictError } from '@core/error-handling/conflict-error'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 
 describe('CreateCustomer', () => {
@@ -42,8 +42,8 @@ describe('CreateCustomer', () => {
     const result = await sut.execute(customer)
 
     expect(result.isFailure()).toBe(true)
-    expect(result.value).toBeInstanceOf(ResourceAlreadyExistsError)
-    const error = result.value as ResourceAlreadyExistsError
+    expect(result.value).toBeInstanceOf(ConflictError)
+    const error = result.value as ConflictError
     expect(error.message).toBe('Customer already exists.')
   })
 

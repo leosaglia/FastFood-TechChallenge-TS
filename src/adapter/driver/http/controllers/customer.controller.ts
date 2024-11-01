@@ -18,7 +18,7 @@ import { CustomerPresenter } from '../presenters/customer-presenter'
 import { ErrorResponse } from '../presenters/error-response'
 import { BadRequestError } from '@core/error-handling/bad-request-error'
 import { ResourceNotFoundError } from '@core/error-handling/resource-not-found-error'
-import { ResourceAlreadyExistsError } from '@core/error-handling/resource-already-exists-error'
+import { ConflictError } from '@core/error-handling/conflict-error'
 import { NestCreateCustomerUseCase } from '../nest/use-cases/nest-create-customer'
 import { NestIdentifyCustomerByDocumentUseCase } from '../nest/use-cases/nest-identify-customer-by-document'
 import { CreateCustomerDto } from '../DTOs/create-customer.dto'
@@ -82,7 +82,7 @@ function handleResultError(
   error:
     | BadRequestError
     | ResourceNotFoundError
-    | ResourceAlreadyExistsError
+    | ConflictError
     | Error,
 ): never {
   switch (error.constructor) {
@@ -90,7 +90,7 @@ function handleResultError(
       throw new BadRequestException(error.message)
     case ResourceNotFoundError:
       throw new NotFoundException(error.message)
-    case ResourceAlreadyExistsError:
+    case ConflictError:
       throw new ConflictException(error.message)
     default:
       throw new InternalServerErrorException(error.message)

@@ -99,6 +99,8 @@ A aplicação expõe várias rotas para gerenciar clientes, produtos e pedidos. 
   - `POST /orders`
 - Listar Pedidos
   - `GET /orders`
+- Pagar Pedido
+  - `POST /orders/{orderId}/payments`
 
 ## Documentação Swagger
 
