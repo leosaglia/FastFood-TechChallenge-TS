@@ -3,6 +3,11 @@
 ###################
 FROM node:18-alpine AS build
 
+# Permissão mínima para rodar - criando novo usuário
+RUN adduser --disabled-password --gecos "" appuser
+
+USER appuser
+
 # Definir o diretório de trabalho dentro do contêiner
 WORKDIR /usr/src/app
 
@@ -28,6 +33,11 @@ RUN npm ci --only=production && npm cache clean --force
 # COPIAR SOMENTE O NECESSÁRIO PARA O CONTAINER
 ###################
 FROM node:18-alpine AS production
+
+# Permissão mínima para rodar - criando novo usuário
+RUN adduser --disabled-password --gecos "" appuser
+
+USER appuser
 
 # Definir o diretório de trabalho dentro do contêiner
 WORKDIR /usr/src/app
